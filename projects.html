@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>projects(1) - dream-wa1ker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="prompt">$ man dream-wa1ker-projects<span class="cursor"></span></div>
+
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <nav class="site-nav" id="site-nav">
+    <a href="index.html">home(1)</a>
+    <a href="whoami.html">whoami(1)</a>
+    <a href="projects.html" class="current">projects(1)</a>
+  </nav>
+
+  <main class="page">
+    <div class="bar">
+      <span>PROJECTS(1)</span>
+      <span>General Commands Manual</span>
+      <span>PROJECTS(1)</span>
+    </div>
+
+    <h1 class="title">NAME</h1>
+    <p class="tagline">projects - what I'm actually building</p>
+
+
+    <section>
+      <h2 class="section-label">Functions</h2>
+      <div class="split-container" id="projects-split">
+        <div class="card-grid" id="projects-grid">
+          <button class="card" data-key="sha256" aria-pressed="false"><i class="fa-solid fa-shield-halved"></i><span class="card-name">sha256</span></button>
+          <button class="card" data-key="init88" aria-pressed="false"><i class="fa-solid fa-microchip"></i><span class="card-name">init88</span></button>
+          <button class="card" data-key="init87" aria-pressed="false"><i class="fa-solid fa-code"></i><span class="card-name">init87</span></button>
+          <button class="card" data-key="pomoc" aria-pressed="false"><i class="fa-solid fa-terminal"></i><span class="card-name">pomoc</span></button>
+          <button class="card" data-key="signatures" aria-pressed="false"><i class="fa-solid fa-book-open"></i><span class="card-name">signatures</span></button>
+        </div>
+        <div class="detail-pane" id="projects-detail" hidden>
+          <button class="detail-close" aria-label="Close detail">&times;</button>
+          <div class="detail-content"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <div class="bar footer">
+      <span>dream-wa1ker</span>
+      <span id="colophon-date"></span>
+      <span>PROJECTS(1)</span>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('colophon-date').textContent =
+      new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+    var projectsData = {
+      sha256: {
+        title: 'sha256(3)',
+        iconClass: 'fa-solid fa-shield-halved',
+        body: '<p>This is a from-scratch reimplementation of SHA-256 algorithm. I just wanted to actually understand the algorithm instead of just calling it. Next I have GPG in my list, but I need to know about the protocol first. Currently not get pushed to github, it is in it\'s documentation phase.</p>'
+      },
+      init88: {
+        title: 'init88(1)',
+        iconClass: 'fa-solid fa-microchip',
+        body: '<p>As mentioned in the `whoami` page - it is a project that is started after <b>init87</b> for understanding the assembly programming in x86-64 linux systems. Currently learning about registers (at the time of writing this website) - may go even further.</p><p>Understanding assembly is very necessary deal for any person who is in the motto of hacking the NSA (just kidding :) lol) - it would be very useful in case of reverse engineering, objdump analysis and using tools like xxd to spit out raw binary data. There is something called as process hollowing that requires kinda binary analysis... (I need to learn it)</p><p><a href="https://github.com/dream-wa1ker/init88">dream-wa1ker/init88</a></p>'
+      },
+      init87: {
+        title: 'init87(1)',
+        iconClass: 'fa-solid fa-code',
+        body: '<p>General C fundamentals project. I guess I have already said more about the C programming stuff; but caution - most of the content in the web branch of this project is AI Generated slop (before the point that I started to hate AI Slops); the web branch is a dead end except the doubts and error sections, but the main branch is the entire example and experiment driven codebase that I wrote with my keyboard and fingers.</p><p><a href="https://github.com/dream-wa1ker/init87">dream-wa1ker/init87</a><br><a href="https://dream-wa1ker.github.io/init87">...github.io/init87</a></p>'
+      },
+      pomoc: {
+        title: 'pomoc(1)',
+        iconClass: 'fa-solid fa-terminal',
+        body: '<p>Alright this is a real project I wrote for my topbar(polybar) in linux, and this is the first proper project without use of any AI in it (the point where I realised everything about the AI Slopification is true).AI Slop in low level is a Brain Rot. This is where the documentation habit actually gets tested against code that has to work. I posted the first version of this pomodoro in the subreddit r/suckless; I got many critiques and suggesstions. One person figured out that the method I am using to count down(I was using decrements) was a wrong mental model and said that I need to use the time epoch and calculate the difference between the initial and any given time.</p><p>After that the code was just - nice! It worked perfectly and even got contributions.</p><p><a href="https://github.com/dream-wa1ker/pomoc">dream-wa1ker/pomoc</a></p>'
+      },
+      signatures: {
+        title: 'signatures(7)',
+        iconClass: 'fa-solid fa-book-open',
+        body: '<p>An ever-growing reference vault for the C standard library and POSIX. Each entry goes deeper than the man pages themselves along with explanations- full signatures, some kernel-level internals(not taht deep), errno tables, and the footguns worth knowing before you find them the hard way. Currently just a reference - sources are `man 3 pages` and the BSD or Linux man pages in web, alonside with the C standard reference. Currently in <b>obsidian/0000</b> and not yet pushed to git remote...</p>'
+      }
+    };
+    initSplitGrid('projects-split', 'projects-grid', 'projects-detail', projectsData);
+
+  </script>
+</body>
+</html>

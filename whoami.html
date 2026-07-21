@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>whoami(1) - dream-wa1ker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="prompt">$ whoami<span class="cursor"></span></div>
+
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <nav class="site-nav" id="site-nav">
+    <a href="index.html">home(1)</a>
+    <a href="whoami.html" class="current">whoami(1)</a>
+    <a href="projects.html">projects(1)</a>
+  </nav>
+
+  <main class="page">
+    <div class="bar">
+      <span>WHOAMI(1)</span>
+      <span>General Commands Manual</span>
+      <span>WHOAMI(1)</span>
+    </div>
+
+    <h1 class="title">NAME</h1>
+    <p class="tagline">whoami - who I actually am which I need not say</p>
+
+
+    <section>
+      <h2 class="section-label">Output</h2>
+      <div class="kv">
+        <div class="kv-row"><span class="k">I use</span><span class="v"><a href="https://archlinux.org">Arch</a> BTW; my brain; alongside with <a href="https://nixos.org">Nix</a> package manager for tests</span></div>
+        <div class="kv-row"><span class="k">I am</span><span class="v">what I am - a true self learner who happens to dive into low-level, systems-programming and cyber-security, especially offensive security - cause I am a student who is just getting into cyber security</span></div>
+        <div class="kv-row"><span class="k">I love</span><span class="v">nature, and ask rebellious questions against political systems; not public enough to get knocked down by the police or military</span></div>
+        <div class="kv-row"><span class="k">I believe</span><span class="v">in Gita 2.47 and 2.53, nothing less or more; information is weapon and those who know how to handle a double edged sword fight - will survive</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-label">Skills & Languages</h2>
+      <div class="split-container" id="skills-split">
+        <div class="card-grid" id="skills-grid">
+          <button class="card" data-key="c" aria-pressed="false"><i class="fa-solid fa-code"></i><span class="card-name">C</span></button>
+          <button class="card" data-key="asm" aria-pressed="false"><i class="fa-solid fa-microchip"></i><span class="card-name">x86-64 Assembly</span></button>
+          <button class="card" data-key="arch" aria-pressed="false"><i class="fa-brands fa-linux"></i><span class="card-name">Arch Linux</span></button>
+          <button class="card" data-key="git" aria-pressed="false"><i class="fa-brands fa-github"></i><span class="card-name">Git &amp; GitHub</span></button>
+          <button class="card" data-key="posix" aria-pressed="false"><i class="fa-solid fa-terminal"></i><span class="card-name">POSIX / Syscalls</span></button>
+          <button class="card" data-key="docs" aria-pressed="false"><i class="fa-solid fa-book"></i><span class="card-name">Technical Docs</span></button>
+        </div>
+        <div class="detail-pane" id="skills-detail" hidden>
+          <button class="detail-close" aria-label="Close detail">&times;</button>
+          <div class="detail-content"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <div class="bar footer">
+      <span>dream-wa1ker</span>
+      <span id="colophon-date"></span>
+      <span>WHOAMI(1)</span>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('colophon-date').textContent =
+      new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+    var skillsData = {
+      c: {
+        title: 'C',
+        iconClass: 'fa-solid fa-code',
+        body: '<p> My journey into C programming is very wierd; I was just language hopping just like distrohopping - I wanted to base my future on a safe irreplaceable programming language. I found <b>go</b> first, soon after learning the basics of python; Then I found about <b>rust</b> - I initially seemed very promising for me as rust developers are far less than C programmers. But actually turned out that the AI cannot perform low level stuffs like humans can (atleast not sooner) because low level is everything that cyberattacks are based on - like spyware, APTs, Nation States, etc.</p><p>I was always fond of those uncrackable hacks, the power of surveillence, the potential of cyberweapons - STUXNET; The NSA, The Putin\'s Bear - Simply these organisations and tools motivated me into the field of cypersec - I either become a part of Nation State, or a part of group that is against the Nation State. And that\'s what project - <a href="https://github.com/dream-wa1ker/init87">init87</a> is all about.</p>'
+      },
+      asm: {
+        title: 'x86-64 Assembly',
+        iconClass: 'fa-solid fa-microchip',
+        body: '<p>Some random, but experienced redditor in the r/CProgramming suggested that I learn x86-64 assembly alongside with C and Linux Syscalls so that I would be able to understand what actually is happening underneath. The project <a href="https://github.com/dream-wa1ker/init88">init88</a> is basically me forcing myself to understand registers and calling conventions instead of letting C hide them. Afterall, STUXNET exploited a PLC controller; that happens to be embedded systems and programming.</p>'
+      },
+      arch: {
+        title: 'Arch Linux',
+        iconClass: 'fa-brands fa-linux',
+        body: '<p>Have been daily driving Arch Linux for almost 2 years. Hell no that I could not find any Arch Linux logo in cdnjs fonts. I like knowing what\'s actually installed on my system and why, instead of a distro deciding for me. One day I had a close call - installing KDE bloat and CachyOS with its generous \'extra\' services; But EFI was not big enough :)</p>'
+      },
+      git: {
+        title: 'Git & GitHub',
+        iconClass: 'fa-brands fa-github',
+        body: '<p>Almost 4 years - it started when I started using linux. Version control for the code, and increasingly for the documentation vault too - it\'s grown past the point where I can keep it all in my head.</p>'
+      },
+      posix: {
+        title: 'POSIX / Syscalls',
+        iconClass: 'fa-solid fa-terminal',
+        body: '<p>This is the layer between "the C function you called" and "what the kernel actually did." And from a securit point of view - understanding the kernel does a lot good than instead of just guessing the C optimisations. This is usually where the interesting footguns live - open(), read(), fopen() all have a story once you go past the signature and; honestly I do not know all of them - just learning.</p>'
+      },
+      docs: {
+        title: 'Technical Documentation',
+        iconClass: 'fa-solid fa-book',
+        body: '<p>I write a lot. Previously in my school days I write in paper, hand printing whole books in my own words and working out 25 notebooks of math problems in calculus; I have not changed in a year - even now I write the kind of reference I wish existed when I was stuck - full signatures, edge cases, errno tables, worked examples, that cross-linked to related functions.</p><p>I simply could not resist; I unusually document or write more that what actually is needed - like a writeup; that actually helps when I come back to read my custom C string library -(ah from my future me).</p>'
+      }
+    };
+    initSplitGrid('skills-split', 'skills-grid', 'skills-detail', skillsData);
+
+  </script>
+</body>
+</html>

@@ -1,14 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>dream-wa1ker</title>
-        <link href="css/style.css" rel="stylesheet">
-    </head>
-    <body>
-        <div>
-            <h1>Initialise</h1>
-        </div>
-    </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dream-wa1ker(1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="prompt">$ man dream-wa1ker<span class="cursor"></span></div>
+
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <nav class="site-nav" id="site-nav">
+    <a href="index.html" class="current">home(1)</a>
+    <a href="whoami.html">whoami(1)</a>
+    <a href="projects.html">projects(1)</a>
+  </nav>
+
+  <main class="page">
+    <div class="bar">
+      <span>DREAM-WA1KER(1)</span>
+      <span>General Commands Manual</span>
+      <span>DREAM-WA1KER(1)</span>
+    </div>
+
+    <h1 class="title">NAME</h1>
+    <p class="tagline">dream-wa1ker - mannual for mannual introduction; wa1kerverse</p>
+
+
+    <section>
+      <h2 class="section-label">Synopsis</h2>
+      <div class="description">
+        <p>Welcome to my website. This is mostly powered by <a href="https://github.com/">Github Pages</a>. Seems like you have stumbled across the most mysterious site in the internet. This is <code>wa1kerverse</code>, my personal hub of internet connections and projects.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-label">Description</h2>
+      <div class="description">
+        <p>I mostly write C and x86_64 assembly, and then document what I learn as thoroughly as I can.
+        For that I use inline comments as well as seperate markdown files for giving explanations for the code in my own words.
+        Most of that lives in a personal reference vault in obsidian which I call as <b>vault - 0000</b>,
+        documenting the function signatures, footguns, etc.</p>
+        <p>Right now I'm mostly working on small C and assembly projects, and writing
+        reference docs for the standard library and POSIX calls those projects lean on.
+        I go deeper than the man pages usually go, because that's the part that actually
+        helps when something breaks at 22:00 - and more importanly in the field of cyber security;</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-label">See Also</h2>
+      <div class="see-also">
+        <ul>
+          <li><span class="label">github</span><a href="https://github.com/dream-wa1ker">github.com/dream-wa1ker</a></li>
+          <li><span class="label">linkedin</span><a href="https://linkedin.com/in/dream-wa1ker" title="Dream Walker">linkedin.com/in/dream-wa1ker</a></li>
+          <li><span class="label">fediverse</span><a rel="me" href="https://infosec.exchange/@__dreamwalker__">infosec.exchange</a> | <a rel="me" href="https://mastodon.social/@__dreamwalker__">mastodon.social</a></li>
+        </ul>
+      </div>
+    </section>
+
+
+    <div class="bar footer">
+      <span><a href="https://dream-wa1ker.github.io/">DREAM-WA1KER(1)</a></span>
+      <span id="colophon-date"></span>
+      <span><a href="https://github.com/dream-wa1ker/dream-wa1ker.github.io/LICENSE">LICENSE</a></span>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('colophon-date').textContent =
+      new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+  </script>
+</body>
 </html>
