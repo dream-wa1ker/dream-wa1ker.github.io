@@ -1,21 +1,26 @@
 :root {
-  --ink: #14181c;
-  --ink-raised: #191e23;
-  --ink-hover: #202830;
+  /* ---- elevation scale: same base hue, increasing lightness ---- */
+  --ink-0: #14181c;  /* page background */
+  --ink-1: #191f25;  /* cards, code blocks, list panels */
+  --ink-2: #202832;  /* hover / active state, nested content */
+  --ink-3: #2a333e;  /* innermost nesting: inline code, blockquotes */
+  --ink: var(--ink-0);
+
   --paper: #e4e1d8;
   --paper-dim: #8b939b;
-  --accent: #45b8ad;
+  --accent: #45b8ad;     /* links, interactive state */
+  --heading: #d1a054;    /* section headings — distinct from links on purpose */
   --rule: #2a3138;
   --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
   --serif: 'Source Serif 4', Georgia, serif;
 }
 
 * { box-sizing: border-box; }
-html { background: var(--ink); }
+html { background: var(--ink-0); }
 
 body {
   margin: 0;
-  background: var(--ink);
+  background: var(--ink-0);
   color: var(--paper);
   font-family: var(--mono);
   line-height: 1.6;
@@ -56,7 +61,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   height: 2.4rem;
   align-items: center;
   justify-content: center;
-  background: var(--ink-raised);
+  background: var(--ink-1);
   border: 1px solid var(--rule);
   border-radius: 4px;
   color: var(--paper);
@@ -86,7 +91,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   font-family: var(--mono);
   position: sticky;
   top: 0;
-  background: var(--ink);
+  background: var(--ink-0);
   z-index: 10;
   border-bottom: 1px solid var(--rule);
 }
@@ -111,7 +116,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     max-width: 75vw;
     margin: 0;
     flex-direction: column;
-    background: var(--ink-raised);
+    background: var(--ink-1);
     border-bottom: none;
     border-right: 1px solid var(--rule);
     padding: 4.5rem 1.25rem 1.5rem;
@@ -150,26 +155,51 @@ h1.title { font-family: var(--mono); font-weight: 700; font-size: 1.05rem; lette
 
 section { margin-bottom: 2.4rem; }
 
+/* headings: warm amber, deliberately NOT the same color as links (--accent) */
 h2.section-label {
   font-family: var(--mono);
   font-weight: 700;
   font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--heading);
   margin: 0 0 0.9rem;
 }
 
 .description { font-family: var(--serif); font-size: 1.05rem; color: var(--paper); max-width: 60ch; }
 .description p { margin: 0 0 1rem; }
+.description code, .kv code, .detail-body code {
+  background: var(--ink-3);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.9em;
+}
+.description blockquote {
+  margin: 0 0 1rem;
+  padding: 0.6rem 1rem;
+  background: var(--ink-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+}
 
-.see-also { font-family: var(--mono); font-size: 0.92rem; }
+/* panels: see-also / kv now sit on their own elevation instead of bare text */
+.see-also, .kv {
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  background: var(--ink-1);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.4rem 1rem;
+}
 .see-also ul { list-style: none; padding: 0; margin: 0; }
-.see-also li { padding: 0.3rem 0; }
+.see-also li { padding: 0.5rem 0; }
+.see-also li + li { border-top: 1px solid var(--rule); }
 .see-also .label { color: var(--paper-dim); display: inline-block; width: 6.5rem; }
+.see-also .v { color: var(--paper); }
 
-.kv { font-family: var(--mono); font-size: 0.92rem; }
-.kv-row { display: flex; gap: 0.75rem; padding: 0.25rem 0; }
+.kv-row { display: flex; gap: 0.75rem; padding: 0.5rem 0; }
+.kv-row + .kv-row { border-top: 1px solid var(--rule); }
 .kv-row .k { color: var(--paper-dim); width: 8rem; flex-shrink: 0; }
 .kv-row .v { color: var(--paper); }
 
@@ -193,7 +223,7 @@ h2.section-label {
   gap: 0.5rem;
   align-items: flex-start;
   text-align: left;
-  background: var(--ink-raised);
+  background: var(--ink-1);
   border: 1px solid var(--rule);
   border-radius: 4px;
   padding: 0.9rem;
@@ -202,8 +232,8 @@ h2.section-label {
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
-.card:hover, .card:focus-visible { background: var(--ink-hover); border-color: var(--rule); }
-.card.is-active { background: var(--ink-hover); border-color: var(--accent); }
+.card:hover, .card:focus-visible { background: var(--ink-2); border-color: var(--rule); }
+.card.is-active { background: var(--ink-2); border-color: var(--accent); }
 .card i { color: var(--accent); font-size: 1.15rem; }
 .card-name { font-size: 0.88rem; }
 
@@ -230,12 +260,13 @@ h2.section-label {
 .detail-title {
   font-family: var(--mono);
   font-size: 0.95rem;
-  color: var(--accent);
+  color: var(--heading);
   margin-bottom: 0.6rem;
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
+.detail-title i { color: var(--accent); }
 .detail-body { font-family: var(--serif); font-size: 1rem; color: var(--paper); max-width: 60ch; }
 .detail-body p { margin: 0 0 0.9rem; }
 
@@ -245,7 +276,93 @@ h2.section-label {
   .split-container.is-split .detail-pane { border-top: none; border-left: 1px solid var(--rule); padding-top: 0; padding-left: 1.75rem; }
 }
 
+/* ---- blog listing ---- */
+.log-list {
+  font-family: var(--mono);
+  background: var(--ink-1);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+.log-entry {
+  display: block;
+  padding: 0.9rem 1rem;
+  color: var(--paper);
+  border: none;
+}
+.log-entry + .log-entry { border-top: 1px solid var(--rule); }
+.log-entry:hover, .log-entry:focus-visible { background: var(--ink-2); border-bottom: none; }
+.log-date { display: block; font-size: 0.72rem; color: var(--paper-dim); letter-spacing: 0.04em; }
+.log-title { display: block; font-size: 0.98rem; color: var(--paper); margin: 0.15rem 0 0.25rem; }
+.log-entry:hover .log-title, .log-entry:focus-visible .log-title { color: var(--accent); }
+.log-tagline { display: block; font-family: var(--serif); font-size: 0.92rem; color: var(--paper-dim); }
 
+/* ---- post meta bar (used on individual blog posts) ---- */
+.post-meta {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--paper-dim);
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0 0 2rem;
+}
+.post-meta .tag {
+  background: var(--ink-2);
+  border-radius: 3px;
+  padding: 0.15rem 0.5rem;
+  color: var(--paper-dim);
+}
+
+/* ---- syntax-highlighted code blocks ---- */
+.code-block {
+  position: relative;
+  background: var(--ink-1);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  margin: 0 0 1.4rem;
+  overflow: hidden;
+}
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  background: var(--ink-2);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.03em;
+}
+.code-copy {
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 0.15rem 0.5rem;
+  cursor: pointer;
+}
+.code-copy:hover { color: var(--paper); border-color: var(--accent); }
+.code-copy.copied { color: var(--accent); border-color: var(--accent); }
+.code-block pre {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+.code-block code.hljs { background: transparent; padding: 0; }
+
+/* highlight.js theme, remapped onto the site palette instead of a stock theme */
+.hljs { color: var(--paper); }
+.hljs-keyword, .hljs-built_in { color: var(--accent); }
+.hljs-string, .hljs-title.function_ { color: var(--heading); }
+.hljs-comment { color: var(--paper-dim); font-style: italic; }
+.hljs-number, .hljs-literal { color: #b98ee0; }
+.hljs-type, .hljs-class .hljs-title { color: #7fb7e8; }
+.hljs-attr, .hljs-variable { color: var(--paper); }
 
 /* ---- male some responsive tweaks overall ---- */
 @media (max-width: 480px) {

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watching my own TCP handshake in Wireshark - dream-wa1ker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="prompt">$ cat blog/tcp-three-way-handshake.log<span class="cursor"></span></div>
+
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <nav class="site-nav" id="site-nav">
+    <a href="../index.html">home(1)</a>
+    <a href="../whoami.html">whoami(1)</a>
+    <a href="../projects.html">projects(1)</a>
+    <a href="../blog.html" class="current">blog(1)</a>
+    <a href="../contact.html">contact(1)</a>
+  </nav>
+
+  <main class="page">
+    <div class="bar">
+      <span>BLOG(1)</span>
+      <span>General Commands Manual</span>
+      <span>BLOG(1)</span>
+    </div>
+
+    <h1 class="title">NAME</h1>
+    <p class="tagline">watching my own TCP handshake in Wireshark</p>
+    <div class="post-meta">
+      <span>2026-07-28</span>
+      <span class="tag">c</span>
+      <span class="tag">sockets</span>
+      <span class="tag">wireshark</span>
+    </div>
+
+    <section>
+      <h2 class="section-label">Setup</h2>
+      <div class="description">
+        <p>I know wireshark as a tool when I first installed kali linux out of curiousity like a cashew. Guess this is the right time to do it. SYN, SYN-ACK, ACK - three basic network replies that determines the connection between two or more devices that are connected in the <a href="https://en.wikipedia.org/wiki/Internet">Internet</a>.</p><p>This is basically the TCP/IP stack - and I am just beginning to understand it. To simply understand it by your own, you need to write a simple client server model in C via sockets : AF_INET, as I have shown below.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-label">The server</h2>
+      <div class="description">
+        <p>Nothing to worry about - <code>socket()</code>, <code>bind()</code>, <code>listen()</code>,
+        <code>accept()</code>. The interesting part is what each call actually triggers at the kernel level: </p>
+      </div>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>server.c</span>
+          <button class="code-copy">copy</button>
+        </div>
+        <pre><code class="language-c">
+int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+struct sockaddr_in addr = {
+    .sin_family = AF_INET,
+    .sin_port = htons(8080),
+    .sin_addr.s_addr = INADDR_ANY
+};
+
+bind(sockfd, (struct sockaddr *)&addr, sizeof(addr));
+listen(sockfd, SOMAXCONN);
+
+int client_fd = accept(sockfd, NULL, NULL);
+// accept() blocks here until the three-way handshake
+// has already completed - by the time this returns,
+// the kernel has done SYN / SYN-ACK / ACK for you.
+        </code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-label">Wireshark output : </h2>
+      <div class="description">
+        <p>Those three packets are what going on irl:</p>
+      </div>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span>capture (lo0, filtered on tcp.port == 8080)</span>
+          <button class="code-copy">copy</button>
+        </div>
+        <pre><code class="language-text">
+1  0.000000  127.0.0.1 -> 127.0.0.1  TCP  SYN     seq=0
+2  0.000031  127.0.0.1 -> 127.0.0.1  TCP  SYN,ACK seq=0 ack=1
+3  0.000052  127.0.0.1 -> 127.0.0.1  TCP  ACK     seq=1 ack=1
+        </code></pre>
+      </div>
+      <div class="description">
+        <p>The most annoying part to understand: <code>accept()</code> doesn't do the handshake, the kernel already finished it before <code>accept()</code> returns anything. <code>accept()</code> just pulls a completed connection off the queue. </p>
+
+        <blockquote>the socket API's job is to make three packets and a queue in the kernel look like a single function call - which is the kind of stuff worth breaking open once</blockquote>
+
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-label">See also</h2>
+      <div class="see-also">
+        <ul>
+          <li><span class="label">vault</span><span class="v">0000/c/signatures - full accept()/bind()/listen() entries with errno tables</span></li>
+          <li><span class="label">blog</span><a href="../blog.html">back to the log</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="bar footer">
+      <span>dream-wa1ker</span>
+      <span id="colophon-date"></span>
+      <span>BLOG(1)</span>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+  <script src="../js/script.js"></script>
+  <script>
+    hljs.highlightAll();
+    document.getElementById('colophon-date').textContent =
+      new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  </script>
+</body>
+</html>

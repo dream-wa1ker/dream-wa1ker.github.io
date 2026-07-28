@@ -75,3 +75,23 @@ function initSplitGrid(containerId, gridId, detailId, data) {
     if (e.key === 'Escape' && !detail.hidden) closeDetail();
   });
 }
+
+// copy-to-clipboard button on code blocks
+(function () {
+  document.querySelectorAll('.code-block').forEach(function (block) {
+    const btn = block.querySelector('.code-copy');
+    const code = block.querySelector('code');
+    if (!btn || !code) return;
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code.textContent).then(function () {
+        const original = btn.textContent;
+        btn.textContent = 'copied';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1500);
+      });
+    });
+  });
+})();
