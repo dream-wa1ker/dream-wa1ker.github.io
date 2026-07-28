@@ -227,7 +227,7 @@
 
         <div class="code-block">
           <div class="code-block-header">
-            <span>send-files.py</span>
+            <span>send-files-httpx.py</span>
             <button class="code-copy">copy</button>
           </div>
           <pre><code class="language-python">
@@ -239,13 +239,13 @@ import os
 import uuid
 import json
 import mimetypes
-import requests
+import httpx
 
 # set the global config path.
-CONFIG_PATH = ".data.json"  # adjust path if needed
+CONFIG = ".data.json"  # adjust path if needed
 
 # load the config path
-def load_config(path=CONFIG_PATH):
+def load_config(path=CONFIG):
     with open(path, "r") as f:
         return json.load(f)
 
@@ -271,12 +271,12 @@ def send_message(body, room_key, config, html=None):
         payload["format"] = "org.matrix.custom.html"
         payload["formatted_body"] = html
 
-    resp = requests.put(
+    resp = httpx.put(
         url,
         json=payload,
         headers={"Authorization": f"Bearer {access_token}"},
     )
-    if not resp.ok:
+    if not resp.is_success:
         sys.exit(f"Matrix API error {resp.status_code}: {resp.text}")
 
     return resp.json()
@@ -293,16 +293,16 @@ def upload_file(filepath, config):
     with open(filepath, "rb") as f:
         data = f.read()
 
-    resp = requests.post(
+    resp = httpx.post(
         f"{homeserver}/_matrix/media/v3/upload",
         params={"filename": filename},
         headers={
             "Authorization": f"Bearer {access_token}",
             "Content-Type": mimetype,
         },
-        data=data,
+        content=data,
     )
-    if not resp.ok:
+    if not resp.is_success:
         sys.exit(f"Upload failed {resp.status_code}: {resp.text}")
 
     return resp.json()["content_uri"], mimetype
@@ -327,12 +327,12 @@ def send_file(filepath, room_key, config, msgtype="m.file"):
         "info": {"size": filesize, "mimetype": mimetype},
     }
 
-    resp = requests.put(
+    resp = httpx.put(
         url,
         json=payload,
         headers={"Authorization": f"Bearer {access_token}"},
     )
-    if not resp.ok:
+    if not resp.is_success:
         sys.exit(f"Matrix API error {resp.status_code}: {resp.text}")
 
     return resp.json()
@@ -342,8 +342,8 @@ def main():
     if len(sys.argv) < 4:
         sys.exit(
             "Usage:\n"
-            '  python matrix_notify.py msg < room-key > "message text"\n'
-            "  python matrix_notify.py file < room-key > < filepath > [--type m.image]"
+            '  python send-files-httpx.py msg <room-key> "message text"\n'
+            "  python send-files-httpx.py file <room-key> <filepath> [--type m.image]"
         )
 
     action, room_key = sys.argv[1], sys.argv[2]
@@ -364,11 +364,13 @@ def main():
 
     else:
         sys.exit(f"Unknown action '{action}'. Use 'msg' or 'file'.")
+
+
 if __name__ == "__main__":
     main()
 
 # usage for this is : 
-# python3 send-file.py < msg-type:msg|file > < message|path/to/file > --type < if image, m.image >
+# python3 send-files-httpx.py <msg-type:msg|file> <message|path/to/file> --type <if image, m.image>
           </code></pre>
         </div>
 
