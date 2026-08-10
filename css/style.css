@@ -283,7 +283,7 @@ h2.section-label {
 .kv-row { display: flex; gap: 0.75rem; padding: 0.5rem 0; }
 .kv-row + .kv-row { border-top: 1px solid var(--rule); }
 .kv-row .k { color: var(--paper-dim); width: 8rem; flex-shrink: 0; }
-.kv-row .v { color: var(--paper); }
+.kv-row .v { color: var(--paper); word-break: break-all;}
 
 .colophon { font-family: var(--mono); font-size: 0.75rem; color: var(--paper-dim); margin-top: 0.5rem; }
 
