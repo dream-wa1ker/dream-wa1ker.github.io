@@ -52,7 +52,7 @@ objdump -d -M intel ./elf
 # provided that you have the elf binary downloaded from the clearance 1.
 ```
 
-```asm
+```txt
 0000000000001139 <main>:
     1139:  55                      push   rbp
     113a:  48 89 e5                mov    rbp,rsp
@@ -98,7 +98,7 @@ I have already a lot to unpack. Let's go piece by piece.
 
 The first three instructions are the standard prologue:
 
-```asm
+```txt
 push   rbp          ; save caller's base pointer
 mov    rbp, rsp     ; set our own frame base
 sub    rsp, 0x10    ; reserve 16 bytes of local space
@@ -128,7 +128,7 @@ The final instruction in standard prologue is reserving the space, 16 bytes. (it
 
 <div class="description" markdown="1">
 
-```asm
+```txt
 lea    rax, [rip+0xec0]      ; rax = address of something at 0x2008
 mov    QWORD PTR [rbp-0x8], rax   ; store it as a local variable
 mov    rax, QWORD PTR [rbp-0x8]   ; load it back into rax
@@ -197,7 +197,7 @@ Here, the last argument should be pushed first onto the stack because the stack 
 
 Notice these `push` instructions. 
 
-```asm
+```txt
 1154:  6a 0a                   push   0xa
 1156:  6a 0a                   push   0xa
 1158:  6a 09                   push   0x9
@@ -222,7 +222,7 @@ Notice these `push` instructions.
 
 The string lives in the read-only data section starting at `0x2008`. `objdump -D` disassembles *everything*, including data sections, so it reads those bytes and prints them as if they were x86 instructions — producing nonsense like:
 
-```asm
+```txt
 2008:  23 69 6e    and  ebp,DWORD PTR [rcx+0x6e]
 200b:  63 6c 75 64 movsxd ebp,DWORD PTR [rbp+rsi*2+0x64]
 ```
@@ -254,7 +254,7 @@ The full format string is:
 
 {% raw %}
 
-```
+```c
 #include <stdio.h>%c#include <stdlib.h>%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c
 ```
 

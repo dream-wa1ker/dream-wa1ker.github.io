@@ -481,3 +481,78 @@ h2.section-label {
   .kv-row .k { width: auto; }
   .card-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
 }
+
+/* ---- tables, styled to match the nord-black elevation scale ---- */
+.description table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.4rem;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  background: var(--ink-1);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.description thead {
+  background: var(--ink-2);
+}
+
+.description th {
+  text-align: left;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--paper-dim);
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--rule);
+  white-space: nowrap;
+}
+
+.description td {
+  padding: 0.55rem 0.9rem;
+  color: var(--paper);
+  vertical-align: top;
+  border-bottom: 1px solid var(--rule);
+}
+
+.description tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.description tbody tr:hover {
+  background: var(--ink-2);
+}
+
+/* inline code inside cells — reuse the innermost elevation, same as .description code elsewhere */
+.description table code {
+  background: var(--ink-3);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.88em;
+}
+
+/* wrap long tables (e.g. the 15-row argument mapping) in horizontal scroll instead of squeezing columns */
+.description table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.description table thead,
+.description table tbody,
+.description table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+@media (max-width: 480px) {
+  .description th,
+  .description td {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.82rem;
+  }
+}
