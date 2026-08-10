@@ -237,9 +237,11 @@ strings elf
 
 The full format string is:
 
+{% raw %}
 ```
 #include <stdio.h>%c#include <stdlib.h>%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c
 ```
+{% endraw %}
 
 Every `%c` gets substituted with a character value from the argument list. With `'\n'` (10) and `'\t'` (9) in the right slots, the output is properly indented C source. The `%s` in the middle gets the pointer to `fixed` itself - argument 8 - so the string prints *its own contents* as the value of the `fixed` variable. That is the quine mechanism.
 
@@ -253,6 +255,7 @@ Every `%c` gets substituted with a character value from the argument list. With 
 
 Putting it all together:
 
+{% raw %}
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -267,6 +270,7 @@ int main(void) {
 
 }
 ```
+{% endraw %}
 
 Run it, and it prints itself. That is the whole program.
 
