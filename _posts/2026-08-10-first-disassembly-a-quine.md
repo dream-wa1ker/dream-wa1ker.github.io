@@ -19,9 +19,12 @@ see_also:
     text: objdump(1) — GNU binary utilities
 ---
 <section markdown="1">
+
 ## The Introduction
 {: .section-label }
+
 <div class="description" markdown="1">
+
 This is a single stripped ELF binary, that I don't know what it is - the rule is that I should not execute it unless I figured out what it is. I tried `catting` it out, seems like it is just raw bytes. 
 
 **Clearance 1** : I have got no hints, but just a binary file which you can download from [here](../assets/blogs/binaries/elf).
@@ -34,9 +37,12 @@ This post is a walkthrough of every step: stack mechanics, the System V AMD64 ca
 </section>
 
 <section markdown="1">
+
 ## The Disassembly Section
 {: .section-label }
+
 <div class="description" markdown="1">
+
 Here is the full `main`, straight from `objdump`:
 
 **Clearance 2** : To get the similarly same output as below, you have to have `objdump` installed in your system and run the following command. 
@@ -84,8 +90,10 @@ I have already a lot to unpack. Let's go piece by piece.
 </section>
 
 <section markdown="1">
+
 ## Setting up the Stack Frame
 {: .section-label }
+
 <div class="description" markdown="1">
 
 The first three instructions are the standard prologue:
@@ -114,8 +122,10 @@ The final instruction in standard prologue is reserving the space, 16 bytes. (it
 </section>
 
 <section markdown="1">
+
 ## Loading the format string pointer
 {: .section-label }
+
 <div class="description" markdown="1">
 
 ```asm
@@ -136,9 +146,12 @@ This address is computed using **RIP-relative addressing**: instead of embedding
 </section>
 
 <section markdown="1">
+
 ## Why there are 15 arguments and where they go
 {: .section-label }
+
 <div class="description" markdown="1">
+
 The System V AMD64 ABI lets you pass the first six integer/pointer arguments in registers, in order:
 
 I need to remember these registers in my mind, so as to setup the correct arguments. 
@@ -201,8 +214,10 @@ Notice these `push` instructions.
 </section>
 
 <section markdown="1">
+
 ## Decoding the format string from raw bytes
 {: .section-label }
+
 <div class="description" markdown="1">
 
 The string lives in the read-only data section starting at `0x2008`. `objdump -D` disassembles *everything*, including data sections, so it reads those bytes and prints them as if they were x86 instructions — producing nonsense like:
@@ -238,9 +253,11 @@ strings elf
 The full format string is:
 
 {% raw %}
+
 ```
 #include <stdio.h>%c#include <stdlib.h>%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c
 ```
+
 {% endraw %}
 
 Every `%c` gets substituted with a character value from the argument list. With `'\n'` (10) and `'\t'` (9) in the right slots, the output is properly indented C source. The `%s` in the middle gets the pointer to `fixed` itself - argument 8 - so the string prints *its own contents* as the value of the `fixed` variable. That is the quine mechanism.
@@ -249,13 +266,16 @@ Every `%c` gets substituted with a character value from the argument list. With 
 </section>
 
 <section markdown="1">
+
 ## The reconstructed source
 {: .section-label }
+
 <div class="description" markdown="1">
 
 Putting it all together:
 
 {% raw %}
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -270,6 +290,7 @@ int main(void) {
 
 }
 ```
+
 {% endraw %}
 
 Run it, and it prints itself. That is the whole program.
@@ -280,8 +301,10 @@ Run it, and it prints itself. That is the whole program.
 </section>
 
 <section markdown="1">
+
 ## So, what is it finally?
 {: .section-label }
+
 <div class="description" markdown="1">
 
 A few things were noticed during this that weren't obvious previously, like these:
