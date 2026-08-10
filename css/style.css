@@ -1,18 +1,52 @@
 :root {
-  /* ---- elevation scale: same base hue, increasing lightness ---- */
-  --ink-0: #14181c;  /* page background */
-  --ink-1: #191f25;  /* cards, code blocks, list panels */
-  --ink-2: #202832;  /* hover / active state, nested content */
-  --ink-3: #2a333e;  /* innermost nesting: inline code, blockquotes */
+  /* ---- nord-black: near-black elevation scale, Nord accent colors on top ---- */
+  --ink-0: #0d1013;  /* page background */
+  --ink-1: #14181d;  /* cards, code blocks, list panels */
+  --ink-2: #1b2027;  /* hover / active state, nested content */
+  --ink-3: #242b34;  /* innermost nesting: inline code, blockquotes */
   --ink: var(--ink-0);
 
-  --paper: #e4e1d8;
-  --paper-dim: #8b939b;
-  --accent: #45b8ad;     /* links, interactive state */
-  --heading: #d1a054;    /* section headings — distinct from links on purpose */
-  --rule: #2a3138;
+  --paper: #eceff4;      /* nord6 */
+  --paper-dim: #7b88a1;
+  --accent: #88c0d0;     /* nord8 — links, interactive state */
+  --accent-soft: rgba(136,192,208,0.35);
+  --heading: #ebcb8b;    /* nord13 — section headings, distinct from links on purpose */
+  --rule: #232830;
+
+  --profile-border: #242b34;
+  --shadow-ring: rgba(255,255,255,0.05);
+  --shadow-drop: rgba(0,0,0,0.5);
+
+  /* rouge token colors */
+  --token-number: #b48ead;  /* nord15 */
+  --token-type: #81a1c1;    /* nord9 */
+  --token-error: #bf616a;   /* nord11 */
+
   --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
   --serif: 'Source Serif 4', Georgia, serif;
+}
+
+:root[data-theme="light"] {
+  /* ---- nord snow-storm: light elevation scale, same accents darkened for contrast ---- */
+  --ink-0: #eceff4;
+  --ink-1: #e5e9f0;
+  --ink-2: #d8dee9;
+  --ink-3: #c7cfdc;
+
+  --paper: #2e3440;
+  --paper-dim: #4c566a;
+  --accent: #5e81ac;     /* nord10 — darker blue reads better on light bg */
+  --accent-soft: rgba(94,129,172,0.3);
+  --heading: #a15f14;    /* darkened nord12 for AA contrast on light bg */
+  --rule: #c7cfdc;
+
+  --profile-border: #c7cfdc;
+  --shadow-ring: rgba(0,0,0,0.05);
+  --shadow-drop: rgba(0,0,0,0.18);
+
+  --token-number: #7c5f96;
+  --token-type: #4c72a6;
+  --token-error: #a8434d;
 }
 
 * { box-sizing: border-box; }
@@ -25,9 +59,10 @@ body {
   font-family: var(--mono);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(69,184,173,0.35); }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
 a:hover, a:focus-visible { border-bottom-color: var(--accent); }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
@@ -70,6 +105,34 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 }
 .nav-toggle:hover { border-color: var(--accent); }
 
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 30;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink-1);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  color: var(--paper);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* smooth the theme switch on the surfaces that carry the elevation scale */
+body, .site-nav, .bar, .card, .kv, .see-also, .log-list, .log-entry,
+.detail-pane, .highlighter-rouge, .description code, .kv code, .detail-body code,
+.description blockquote, .post-meta .tag, .nav-toggle, a {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
 .nav-overlay {
   position: fixed;
   inset: 0;
@@ -106,7 +169,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 @media (max-width: 768px) {
   .nav-toggle { display: flex; }
-  .prompt { padding-left: 3.5rem; }
+  .prompt { padding-left: 3.5rem; padding-right: 3.5rem; }
   .site-nav {
     position: fixed;
     top: 0;
@@ -163,10 +226,11 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #2a2f3a;
-  box-shadow: 0 0 0 6px rgba(255,255,255,0.05), 0 12px 30px rgba(0,0,0,0.5);
+  border: 4px solid var(--profile-border);
+  box-shadow: 0 0 0 6px var(--shadow-ring), 0 12px 30px var(--shadow-drop);
 }
-.profile-name { color: #9aa1ac; font-size: 14px; }
+
+.profile-name { color: var(--paper-dim); font-size: 14px; }
 
 h1.title { font-family: var(--mono); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.03em; margin: 2.2rem 0 0.25rem; }
 .tagline { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--paper-dim); margin: 0 0 2.5rem; }
@@ -397,16 +461,16 @@ h2.section-label {
 .highlight .k, .highlight .kd, .highlight .kn, .highlight .kr, .highlight .nb, .highlight .bp { color: var(--accent); } /* keywords, builtins */
 .highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .nf { color: var(--heading); } /* strings, function names */
 .highlight .c, .highlight .c1, .highlight .cm { color: var(--paper-dim); font-style: italic; } /* comments */
-.highlight .mi, .highlight .mf, .highlight .il { color: #b98ee0; } /* numbers */
-.highlight .kc, .highlight .no { color: #b98ee0; } /* constants / literals */
-.highlight .kt, .highlight .nc { color: #7fb7e8; } /* types / classes */
+.highlight .mi, .highlight .mf, .highlight .il { color: var(--token-number); } /* numbers */
+.highlight .kc, .highlight .no { color: var(--token-number); } /* constants / literals */
+.highlight .kt, .highlight .nc { color: var(--token-type); } /* types / classes */
 .highlight .na, .highlight .nv, .highlight .vi { color: var(--paper); } /* attributes, variables */
 .highlight .o, .highlight .p { color: var(--paper); } /* operators, punctuation */
-.highlight .err { color: #e06c75; }
+.highlight .err { color: var(--token-error); }
 
 /* ---- male some responsive tweaks overall ---- */
 @media (max-width: 480px) {
-  .prompt { padding: 1.5rem 1.25rem 0 3.5rem; font-size: 0.78rem; }
+  .prompt { padding: 1.5rem 3.5rem 0 3.5rem; font-size: 0.78rem; }
   .site-nav a { font-size: 0.9rem; }
   .page { padding: 0 1.25rem; margin: 1rem auto 3rem; }
   .bar { font-size: 0.68rem; }

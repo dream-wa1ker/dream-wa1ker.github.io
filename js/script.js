@@ -1,3 +1,33 @@
+// dark/light theme toggle, persisted in localStorage
+// (the actual attribute is set pre-paint by an inline script in <head> —
+// this just wires up the button and keeps it in sync going forward)
+(function () {
+  const btn = document.getElementById('theme-toggle');
+  const root = document.documentElement;
+  if (!btn) return;
+
+  function isLight() {
+    return root.getAttribute('data-theme') === 'light';
+  }
+  function syncIcon() {
+    const icon = btn.querySelector('i');
+    if (icon) icon.className = isLight() ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+  }
+
+  syncIcon();
+
+  btn.addEventListener('click', function () {
+    const next = isLight() ? 'dark' : 'light';
+    if (next === 'light') {
+      root.setAttribute('data-theme', 'light');
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncIcon();
+  });
+})();
+
 // nav toggle (mobile sidebar)
 (function () {
   const toggle = document.getElementById('nav-toggle');

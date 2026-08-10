@@ -390,6 +390,6 @@ curl -X POST https://yourserver.tld/_matrix/client/v3/login \
 
 **Step 4 :** Run the python script and you are good to go. See the last comment for usage.
 
-> I have not yet published to code to github. I need to document it and explain it, and do some advanced stuffs like defaulting, fallingback and learn more of matrix APIs for doing automation and bots. See the official spec given below for more details.
+> I have not yet published to code to github. I need to document it and explain it, and do some advanced stuffs like defaulting, falling back and learn more of matrix APIs for doing automation and bots. See the official spec given below for more details.
 </div>
 </section>
