@@ -1,0 +1,11 @@
+<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+  <i class="fa-solid fa-bars"></i>
+</button>
+<div class="nav-overlay" id="nav-overlay"></div>
+<nav class="site-nav" id="site-nav">
+  <a href="{{ '/' | relative_url }}"{% if page.nav_id == 'home' %} class="current"{% endif %}>home(1)</a>
+  <a href="{{ '/whoami/' | relative_url }}"{% if page.nav_id == 'whoami' %} class="current"{% endif %}>whoami(1)</a>
+  <a href="{{ '/projects/' | relative_url }}"{% if page.nav_id == 'projects' %} class="current"{% endif %}>projects(1)</a>
+  <a href="{{ '/blog/' | relative_url }}"{% if page.nav_id == 'blog' %} class="current"{% endif %}>blog(1)</a>
+  <a href="{{ '/contact/' | relative_url }}"{% if page.nav_id == 'contact' %} class="current"{% endif %}>contact(1)</a>
+</nav>

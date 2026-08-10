@@ -1,0 +1,15 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page.title }}{% unless page.nav_id == "home" %} - dream-wa1ker{% endunless %}</title>
+<meta name="description" content="{{ page.description | default: site.description }}">
+<meta property="og:title" content="dream-wa1ker::{{ page.og_slug | default: 'index' }}">
+<link rel="icon" href="{{ '/assets/favicon.ico' | relative_url }}">
+<meta property="og:description" content="{{ page.description | default: site.description }}">
+<meta property="og:image" content="{{ site.url }}{{ site.og_image }}">
+<meta name="google-site-verification" content="{{ site.google_site_verification }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">

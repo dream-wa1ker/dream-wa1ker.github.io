@@ -1,0 +1,23 @@
+---
+layout: default
+---
+<h1 class="title">{{ page.page_title | default: "NAME" }}</h1>
+<p class="tagline">{{ page.tagline | default: page.title }}</p>
+<div class="post-meta">
+  <span>{{ page.date | date: "%Y-%m-%d" }}</span>
+  {% for tag in page.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+</div>
+
+{{ content }}
+
+<section>
+  <h2 class="section-label">See also</h2>
+  <div class="see-also">
+    <ul>
+      {% for link in page.see_also %}
+      <li><span class="label">{{ link.label }}</span><a href="{{ link.url }}">{{ link.text }}</a></li>
+      {% endfor %}
+      <li><span class="label">blog</span><a href="{{ '/blog/' | relative_url }}">back to the log</a></li>
+    </ul>
+  </div>
+</section>

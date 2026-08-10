@@ -1,0 +1,39 @@
+sha256:
+  name: sha256
+  icon: fa-solid fa-shield-halved
+  title: sha256(3)
+  body: |
+    <p>This is a from-scratch reimplementation of SHA-256 algorithm. I just wanted to actually understand the algorithm instead of just calling it. Next I have GPG in my list, but I need to know about the protocol first. Currently not get pushed to github, it is in it's documentation phase.</p>
+
+init88:
+  name: init88
+  icon: fa-solid fa-microchip
+  title: init88(1)
+  body: |
+    <p>As mentioned in the `whoami` page - it is a project that is started after <b>init87</b> for understanding the assembly programming in x86-64 linux systems. Currently learning about registers (at the time of writing this website) - may go even further.</p>
+    <p>Understanding assembly is very necessary deal for any person who is in the motto of hacking the NSA (just kidding :) lol) - it would be very useful in case of reverse engineering, objdump analysis and using tools like xxd to spit out raw binary data. There is something called as process hollowing that requires kinda binary analysis... (I need to learn it)</p>
+    <p><a href="https://github.com/dream-wa1ker/init88">dream-wa1ker/init88</a></p>
+
+init87:
+  name: init87
+  icon: fa-solid fa-code
+  title: init87(1)
+  body: |
+    <p>General C fundamentals project. I guess I have already said more about the C programming stuff; but caution - most of the content in the web branch of this project is AI Generated slop (before the point that I started to hate AI Slops); the web branch is a dead end except the doubts and error sections, but the main branch is the entire example and experiment driven codebase that I wrote with my keyboard and fingers.</p>
+    <p><a href="https://github.com/dream-wa1ker/init87">dream-wa1ker/init87</a><br><a href="https://dream-wa1ker.github.io/init87">...github.io/init87</a></p>
+
+pomoc:
+  name: pomoc
+  icon: fa-solid fa-terminal
+  title: pomoc(1)
+  body: |
+    <p>Alright this is a real project I wrote for my topbar(polybar) in linux, and this is the first proper project without use of any AI in it (the point where I realised everything about the AI Slopification is true).AI Slop in low level is a Brain Rot. This is where the documentation habit actually gets tested against code that has to work. I posted the first version of this pomodoro in the subreddit r/suckless; I got many critiques and suggesstions. One person figured out that the method I am using to count down(I was using decrements) was a wrong mental model and said that I need to use the time epoch and calculate the difference between the initial and any given time.</p>
+    <p>After that the code was just - nice! It worked perfectly and even got contributions.</p>
+    <p><a href="https://github.com/dream-wa1ker/pomoc">dream-wa1ker/pomoc</a></p>
+
+signatures:
+  name: signatures
+  icon: fa-solid fa-book-open
+  title: signatures(7)
+  body: |
+    <p>An ever-growing reference vault for the C standard library and POSIX. Each entry goes deeper than the man pages themselves along with explanations- full signatures, some kernel-level internals(not taht deep), errno tables, and the footguns worth knowing before you find them the hard way. Currently just a reference - sources are `man 3 pages` and the BSD or Linux man pages in web, alonside with the C standard reference. Currently in <b>obsidian/0000</b> and not yet pushed to git remote...</p>

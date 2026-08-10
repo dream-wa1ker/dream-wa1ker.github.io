@@ -76,12 +76,25 @@ function initSplitGrid(containerId, gridId, detailId, data) {
   });
 }
 
-// copy-to-clipboard button on code blocks
+// wrap Rouge's generated code blocks with a header (language label + copy button),
+// mirroring the old hand-authored .code-block markup
 (function () {
-  document.querySelectorAll('.code-block').forEach(function (block) {
-    const btn = block.querySelector('.code-copy');
-    const code = block.querySelector('code');
-    if (!btn || !code) return;
+  document.querySelectorAll('.highlighter-rouge').forEach(function (block) {
+    const code = block.querySelector('pre.highlight code, pre.highlight');
+    if (!code || block.dataset.wrapped) return;
+    block.dataset.wrapped = '1';
+
+    const langMatch = Array.from(block.classList).find(function (c) {
+      return c.indexOf('language-') === 0;
+    });
+    const label = langMatch ? langMatch.replace('language-', '') : 'code';
+
+    const header = document.createElement('div');
+    header.className = 'code-block-header';
+    header.innerHTML = '<span>' + label + '</span><button class="code-copy">copy</button>';
+    block.insertBefore(header, block.firstChild);
+
+    const btn = header.querySelector('.code-copy');
     btn.addEventListener('click', function () {
       navigator.clipboard.writeText(code.textContent).then(function () {
         const original = btn.textContent;

@@ -150,6 +150,24 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 }
 .bar.footer { border-top: 1px solid var(--rule); border-bottom: none; margin-top: 3rem; }
 
+.profile-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px;
+  background: none;
+}
+.profile-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #2a2f3a;
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.05), 0 12px 30px rgba(0,0,0,0.5);
+}
+.profile-name { color: #9aa1ac; font-size: 14px; }
+
 h1.title { font-family: var(--mono); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.03em; margin: 2.2rem 0 0.25rem; }
 .tagline { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--paper-dim); margin: 0 0 2.5rem; }
 
@@ -353,16 +371,38 @@ h2.section-label {
   font-size: 0.85rem;
   line-height: 1.55;
 }
-.code-block code.hljs { background: transparent; padding: 0; }
 
-/* highlight.js theme, remapped onto the site palette instead of a stock theme */
-.hljs { color: var(--paper); }
-.hljs-keyword, .hljs-built_in { color: var(--accent); }
-.hljs-string, .hljs-title.function_ { color: var(--heading); }
-.hljs-comment { color: var(--paper-dim); font-style: italic; }
-.hljs-number, .hljs-literal { color: #b98ee0; }
-.hljs-type, .hljs-class .hljs-title { color: #7fb7e8; }
-.hljs-attr, .hljs-variable { color: var(--paper); }
+/* Rouge (Jekyll's built-in highlighter) container, styled like the old .code-block */
+.highlighter-rouge {
+  position: relative;
+  background: var(--ink-1);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  margin: 0 0 1.4rem;
+  overflow: hidden;
+}
+.highlighter-rouge .highlight { background: transparent; margin: 0; }
+.highlighter-rouge pre.highlight {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  font-family: var(--mono);
+}
+.highlighter-rouge pre.highlight code { background: transparent; padding: 0; }
+
+/* Rouge token theme, remapped onto the site palette instead of a stock theme */
+.highlight, .highlight pre { color: var(--paper); }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr, .highlight .nb, .highlight .bp { color: var(--accent); } /* keywords, builtins */
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .nf { color: var(--heading); } /* strings, function names */
+.highlight .c, .highlight .c1, .highlight .cm { color: var(--paper-dim); font-style: italic; } /* comments */
+.highlight .mi, .highlight .mf, .highlight .il { color: #b98ee0; } /* numbers */
+.highlight .kc, .highlight .no { color: #b98ee0; } /* constants / literals */
+.highlight .kt, .highlight .nc { color: #7fb7e8; } /* types / classes */
+.highlight .na, .highlight .nv, .highlight .vi { color: var(--paper); } /* attributes, variables */
+.highlight .o, .highlight .p { color: var(--paper); } /* operators, punctuation */
+.highlight .err { color: #e06c75; }
 
 /* ---- male some responsive tweaks overall ---- */
 @media (max-width: 480px) {

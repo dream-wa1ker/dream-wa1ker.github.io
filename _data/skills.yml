@@ -1,0 +1,43 @@
+c:
+  name: C
+  icon: fa-solid fa-code
+  title: C
+  body: |
+    <p> My journey into C programming is very wierd; I was just language hopping just like distrohopping - I wanted to base my future on a safe irreplaceable programming language. I found <b>go</b> first, soon after learning the basics of python; Then I found about <b>rust</b> - I initially seemed very promising for me as rust developers are far less than C programmers. But actually turned out that the AI cannot perform low level stuffs like humans can (atleast not sooner) because low level is everything that cyberattacks are based on - like spyware, APTs, Nation States, etc.</p>
+    <p>I was always fond of those uncrackable hacks, the power of surveillence, the potential of cyberweapons - STUXNET; The NSA, The Putin's Bear - Simply these organisations and tools motivated me into the field of cypersec - I either become a part of Nation State, or a part of group that is against the Nation State. And that's what project - <a href="https://github.com/dream-wa1ker/init87">init87</a> is all about.</p>
+
+asm:
+  name: x86-64 Assembly
+  icon: fa-solid fa-microchip
+  title: x86-64 Assembly
+  body: |
+    <p>Some random, but experienced redditor in the r/CProgramming suggested that I learn x86-64 assembly alongside with C and Linux Syscalls so that I would be able to understand what actually is happening underneath. The project <a href="https://github.com/dream-wa1ker/init88">init88</a> is basically me forcing myself to understand registers and calling conventions instead of letting C hide them. Afterall, STUXNET exploited a PLC controller; that happens to be embedded systems and programming.</p>
+
+arch:
+  name: Arch Linux
+  icon: fa-brands fa-linux
+  title: Arch Linux
+  body: |
+    <p>Have been daily driving Arch Linux for almost 2 years. Hell no that I could not find any Arch Linux logo in cdnjs fonts. I like knowing what's actually installed on my system and why, instead of a distro deciding for me. One day I had a close call - installing KDE bloat and CachyOS with its generous 'extra' services; But EFI was not big enough :)</p>
+
+git:
+  name: Git & GitHub
+  icon: fa-brands fa-github
+  title: Git & GitHub
+  body: |
+    <p>Almost 4 years - it started when I started using linux. Version control for the code, and increasingly for the documentation vault too - it's grown past the point where I can keep it all in my head.</p>
+
+posix:
+  name: POSIX / Syscalls
+  icon: fa-solid fa-terminal
+  title: POSIX / Syscalls
+  body: |
+    <p>This is the layer between "the C function you called" and "what the kernel actually did." And from a securit point of view - understanding the kernel does a lot good than instead of just guessing the C optimisations. This is usually where the interesting footguns live - open(), read(), fopen() all have a story once you go past the signature and; honestly I do not know all of them - just learning.</p>
+
+docs:
+  name: Technical Docs
+  icon: fa-solid fa-book
+  title: Technical Documentation
+  body: |
+    <p>I write a lot. Previously in my school days I write in paper, hand printing whole books in my own words and working out 25 notebooks of math problems in calculus; I have not changed in a year - even now I write the kind of reference I wish existed when I was stuck - full signatures, edge cases, errno tables, worked examples, that cross-linked to related functions.</p>
+    <p>I simply could not resist; I unusually document or write more that what actually is needed - like a writeup; that actually helps when I come back to read my custom C string library -(ah from my future me).</p>

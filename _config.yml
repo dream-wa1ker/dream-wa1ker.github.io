@@ -1,0 +1,45 @@
+title: dream-wa1ker
+author: dream-wa1ker
+url: "https://dream-wa1ker.github.io"
+baseurl: ""
+
+description: >-
+  This is wa1kerverse, my personal portfolio and projects hub. I am
+  dream-wa1ker, and I am a student who learns. Welcome to a mysterious
+  part of the web, this site should probably engage you.
+
+og_image: /assets/preview.png
+google_site_verification: YMBlItzQesKAjM6SOCvZdxJKK7zcefEp-ElVKwNY_S0
+
+# pretty urls: /whoami.md -> /whoami/
+permalink: pretty
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+collections:
+  posts:
+    output: true
+    permalink: /blog/:title/
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
+
+plugins:
+  - jekyll-sitemap

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include head.html %}
+</head>
+<body>
+
+  <div class="prompt">$ {{ page.prompt }}<span class="cursor"></span></div>
+
+  {% include nav.html %}
+
+  <main class="page">
+    <div class="bar">
+      <span>{{ page.bar_label }}</span>
+      <span>General Commands Manual</span>
+      <span>{{ page.bar_label }}</span>
+    </div>
+
+    {{ content }}
+
+    <div class="bar footer">
+      {% if page.footer_links %}
+      <span><a href="{{ site.url }}/">DREAM-WA1KER(1)</a></span>
+      <span id="colophon-date"></span>
+      <span><a href="https://github.com/dream-wa1ker/dream-wa1ker.github.io/blob/main/LICENSE">LICENSE</a></span>
+      {% else %}
+      <span>dream-wa1ker</span>
+      <span id="colophon-date"></span>
+      <span>{{ page.bar_label }}</span>
+      {% endif %}
+    </div>
+  </main>
+
+  <script src="{{ '/js/script.js' | relative_url }}"></script>
+  <script>
+    document.getElementById('colophon-date').textContent =
+      new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  </script>
+</body>
+</html>
