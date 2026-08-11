@@ -247,16 +247,16 @@ Those are not real instructions, reverse engineers call them *pseudo instruction
 
 The null terminator (`00`) marks the end. You can verify the whole thing instantly with:
 
-<div class="highlighter-rouge">
-  <pre class="highlight"><code class="language-bash">strings elf</code></pre>
-</div>
+```bash
+strings elf
+```
 
 The full format string is:
 
 {% raw %}
-<div class="highlighter-rouge">
-  <pre class="highlight"><code class="language-c">#include &lt;stdio.h&gt;%c#include &lt;stdlib.h&gt;%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c</code></pre>
-</div>
+```c
+#include &lt;stdio.h&gt;%c#include &lt;stdlib.h&gt;%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c
+```
 {% endraw %}
 
 Every `%c` gets substituted with a character value from the argument list. With `'\n'` (10) and `'\t'` (9) in the right slots, the output is properly indented C source. The `%s` in the middle gets the pointer to `fixed` itself - argument 8 - so the string prints *its own contents* as the value of the `fixed` variable. That is the quine mechanism.
@@ -274,11 +274,8 @@ Every `%c` gets substituted with a character value from the argument list. With 
 Putting it all together:
 
 {% raw %}
-<div class="highlighter-rouge">
-<pre class="highlight"><code class="language-c">
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
 
+```c
 int main(void) {
 
   const char* fixed = "#include &lt;stdio.h&gt;%c#include &lt;stdlib.h&gt;%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c";
@@ -288,8 +285,7 @@ int main(void) {
   return EXIT_SUCCESS;
 
 }
-</code></pre>
-</div>
+```
 {% endraw %}
 
 Run it, and it prints itself. That is the whole program.
