@@ -198,7 +198,8 @@ Here, the last argument should be pushed first onto the stack because the stack 
 Notice these `push` instructions. 
 
 <div class="highlighter-rouge">
-  <pre class="highlight"><code class="language-asm">1154:  6a 0a                   push   0xa
+<pre class="highlight"><code class="language-asm">
+1154:  6a 0a                   push   0xa
 1156:  6a 0a                   push   0xa
 1158:  6a 09                   push   0x9
 115a:  6a 0a                   push   0xa
@@ -206,7 +207,8 @@ Notice these `push` instructions.
 115e:  6a 0a                   push   0xa
 1160:  6a 22                   push   0x22
 1162:  ff 75 f8                push   QWORD PTR [rbp-0x8]
-1165:  6a 22                   push   0x22</code></pre>
+1165:  6a 22                   push   0x22
+</code></pre>
 </div>
 
 </div>
@@ -251,9 +253,11 @@ The null terminator (`00`) marks the end. You can verify the whole thing instant
 
 The full format string is:
 
+{% raw %}
 <div class="highlighter-rouge">
   <pre class="highlight"><code class="language-c">#include &lt;stdio.h&gt;%c#include &lt;stdlib.h&gt;%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c</code></pre>
 </div>
+{% endraw %}
 
 Every `%c` gets substituted with a character value from the argument list. With `'\n'` (10) and `'\t'` (9) in the right slots, the output is properly indented C source. The `%s` in the middle gets the pointer to `fixed` itself - argument 8 - so the string prints *its own contents* as the value of the `fixed` variable. That is the quine mechanism.
 
@@ -269,8 +273,10 @@ Every `%c` gets substituted with a character value from the argument list. With 
 
 Putting it all together:
 
+{% raw %}
 <div class="highlighter-rouge">
-  <pre class="highlight"><code class="language-c">#include &lt;stdio.h&gt;
+<pre class="highlight"><code class="language-c">
+#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 
 int main(void) {
@@ -281,8 +287,10 @@ int main(void) {
 
   return EXIT_SUCCESS;
 
-}</code></pre>
+}
+</code></pre>
 </div>
+{% endraw %}
 
 Run it, and it prints itself. That is the whole program.
 
