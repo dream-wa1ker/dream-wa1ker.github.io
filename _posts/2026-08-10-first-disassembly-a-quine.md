@@ -52,8 +52,8 @@ objdump -d -M intel ./elf
 # provided that you have the elf binary downloaded from the clearance 1.
 ```
 
-```txt
-0000000000001139 <main>:
+<div class="highlighter-rouge">
+  <pre class="highlight"><code>0000000000001139 &lt;main&gt;:
     1139:  55                      push   rbp
     113a:  48 89 e5                mov    rbp,rsp
     113d:  48 83 ec 10             sub    rsp,0x10
@@ -77,12 +77,12 @@ objdump -d -M intel ./elf
     117d:  be 0a 00 00 00          mov    esi,0xa
     1182:  48 89 c7                mov    rdi,rax
     1185:  b8 00 00 00 00          mov    eax,0x0
-    118a:  e8 a1 fe ff ff          call   1030 <printf@plt>
+    118a:  e8 a1 fe ff ff          call   1030 &lt;printf@plt&gt;
     118f:  48 83 c4 50             add    rsp,0x50
     1193:  b8 00 00 00 00          mov    eax,0x0
     1198:  c9                      leave
-    1199:  c3                      ret
-```
+    1199:  c3                      ret</code></pre>
+</div>
 
 I have already a lot to unpack. Let's go piece by piece.
 
@@ -207,7 +207,6 @@ Notice these `push` instructions.
 1160:  6a 22                   push   0x22
 1162:  ff 75 f8                push   QWORD PTR [rbp-0x8]
 1165:  6a 22                   push   0x22
-
 ```
 
 </div>
@@ -222,10 +221,10 @@ Notice these `push` instructions.
 
 The string lives in the read-only data section starting at `0x2008`. `objdump -D` disassembles *everything*, including data sections, so it reads those bytes and prints them as if they were x86 instructions — producing nonsense like:
 
-```txt
-2008:  23 69 6e    and  ebp,DWORD PTR [rcx+0x6e]
-200b:  63 6c 75 64 movsxd ebp,DWORD PTR [rbp+rsi*2+0x64]
-```
+<div class="highlighter-rouge">
+  <pre class="highlight"><code>2008:  23 69 6e    and  ebp,DWORD PTR [rcx+0x6e]
+200b:  63 6c 75 64 movsxd ebp,DWORD PTR [rbp+rsi*2+0x64]</code></pre>
+</div>
 
 Those are not real instructions, reverse engineers call them *pseudo instructions*. They are character bytes being misread as *opcodes* (assembly instruction keywords). The actual data is just the ASCII values, (which I just copied that entire section starting from `2008` till end of section, put into **gemini** to provide raw bytes mapped into ascii characters):
 
@@ -254,9 +253,9 @@ The full format string is:
 
 {% raw %}
 
-```c
-#include <stdio.h>%c#include <stdlib.h>%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c
-```
+<div class="highlighter-rouge">
+  <pre class="highlight"><code>#include &lt;stdio.h&gt;%c#include &lt;stdlib.h&gt;%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c</code></pre>
+</div>
 
 {% endraw %}
 
@@ -276,20 +275,20 @@ Putting it all together:
 
 {% raw %}
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
+<div class="highlighter-rouge">
+  <pre class="highlight"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
 
 int main(void) {
 
-  const char* fixed = "#include <stdio.h>%c#include <stdlib.h>%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c";
+  const char* fixed = "#include &lt;stdio.h&gt;%c#include &lt;stdlib.h&gt;%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c";
 
   printf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);
 
   return EXIT_SUCCESS;
 
-}
-```
+}</code></pre>
+</div>
 
 {% endraw %}
 
@@ -321,4 +320,3 @@ A few things were noticed during this that weren't obvious previously, like thes
 
 </div>
 </section>
-
