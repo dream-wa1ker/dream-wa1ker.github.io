@@ -47,13 +47,13 @@ Here is the full `main`, straight from `objdump`:
 
 **Clearance 2** : To get the similarly same output as below, you have to have `objdump` installed in your system and run the following command. 
 
-```bash
-objdump -d -M intel ./elf
-# provided that you have the elf binary downloaded from the clearance 1.
-```
+<div class="highlighter-rouge">
+  <pre class="highlight"><code class="language-bash">objdump -d -M intel ./elf
+# provided that you have the elf binary downloaded from the clearance 1.</code></pre>
+</div>
 
 <div class="highlighter-rouge">
-  <pre class="highlight"><code>0000000000001139 &lt;main&gt;:
+  <pre class="highlight"><code class="language-asm">0000000000001139 &lt;main&gt;:
     1139:  55                      push   rbp
     113a:  48 89 e5                mov    rbp,rsp
     113d:  48 83 ec 10             sub    rsp,0x10
@@ -98,13 +98,13 @@ I have already a lot to unpack. Let's go piece by piece.
 
 The first three instructions are the standard prologue:
 
-```txt
-push   rbp          ; save caller's base pointer
+<div class="highlighter-rouge">
+  <pre class="highlight"><code class="language-asm">push   rbp          ; save caller's base pointer
 mov    rbp, rsp     ; set our own frame base
-sub    rsp, 0x10    ; reserve 16 bytes of local space
-```
+sub    rsp, 0x10    ; reserve 16 bytes of local space</code></pre>
+</div>
 
-`push` is two micro-operations back to back: `sub rsp, 8` then `mov [rsp], <value>`. The stack grows *downward*, so pushing something expands it toward lower addresses.
+`push` is two micro-operations back to back: `sub rsp, 8` then `mov [rsp], value`. The stack grows *downward*, so pushing something expands it toward lower addresses.
 
 When the linker's `_start` calls `main`, the return address is already sitting on the stack, which means RSP is 8-byte aligned but not 16-byte aligned at that moment. `push rbp` subtracts another 8 bytes, which brings RSP back to a 16-byte boundary. After that, `sub rsp, 0x10` keeps it aligned and carves out 16 bytes of local variable space.
 
@@ -128,11 +128,11 @@ The final instruction in standard prologue is reserving the space, 16 bytes. (it
 
 <div class="description" markdown="1">
 
-```txt
-lea    rax, [rip+0xec0]      ; rax = address of something at 0x2008
+<div class="highlighter-rouge">
+  <pre class="highlight"><code class="language-asm">lea    rax, [rip+0xec0]      ; rax = address of something at 0x2008
 mov    QWORD PTR [rbp-0x8], rax   ; store it as a local variable
-mov    rax, QWORD PTR [rbp-0x8]   ; load it back into rax
-```
+mov    rax, QWORD PTR [rbp-0x8]   ; load it back into rax</code></pre>
+</div>
 
 `lea` does not dereference - it just computes and stores the address. The comment from `objdump` tells us the resolved address is `0x2008`, which lands inside a section the disassembler labelled `_IO_stdin_used` (a read-only data sentinel the linker drops in). The actual string *starts* at `0x2008`.
 
@@ -156,9 +156,9 @@ The System V AMD64 ABI lets you pass the first six integer/pointer arguments in 
 
 I need to remember these registers in my mind, so as to setup the correct arguments. 
 
-```txt
-rdi, rsi, rdx, rcx, r8, r9
-```
+<div class="highlighter-rouge">
+  <pre class="highlight"><code class="language-asm">rdi, rsi, rdx, rcx, r8, r9</code></pre>
+</div>
 
 `printf` here takes **15 arguments** (one format string plus fourteen values). Six fit in registers; the remaining nine have to go on the stack. The ABI says stack arguments are pushed **right-to-left**, so the last argument gets pushed first and ends up deepest in the stack, while argument 7 (the first stack argument) is pushed last and ends up shallowest — right where `printf` can pick it up.
 
@@ -197,8 +197,8 @@ Here, the last argument should be pushed first onto the stack because the stack 
 
 Notice these `push` instructions. 
 
-```txt
-1154:  6a 0a                   push   0xa
+<div class="highlighter-rouge">
+  <pre class="highlight"><code class="language-asm">1154:  6a 0a                   push   0xa
 1156:  6a 0a                   push   0xa
 1158:  6a 09                   push   0x9
 115a:  6a 0a                   push   0xa
@@ -206,8 +206,8 @@ Notice these `push` instructions.
 115e:  6a 0a                   push   0xa
 1160:  6a 22                   push   0x22
 1162:  ff 75 f8                push   QWORD PTR [rbp-0x8]
-1165:  6a 22                   push   0x22
-```
+1165:  6a 22                   push   0x22</code></pre>
+</div>
 
 </div>
 </section>
@@ -222,7 +222,7 @@ Notice these `push` instructions.
 The string lives in the read-only data section starting at `0x2008`. `objdump -D` disassembles *everything*, including data sections, so it reads those bytes and prints them as if they were x86 instructions — producing nonsense like:
 
 <div class="highlighter-rouge">
-  <pre class="highlight"><code>2008:  23 69 6e    and  ebp,DWORD PTR [rcx+0x6e]
+  <pre class="highlight"><code class="language-asm">2008:  23 69 6e    and  ebp,DWORD PTR [rcx+0x6e]
 200b:  63 6c 75 64 movsxd ebp,DWORD PTR [rbp+rsi*2+0x64]</code></pre>
 </div>
 
@@ -245,19 +245,15 @@ Those are not real instructions, reverse engineers call them *pseudo instruction
 
 The null terminator (`00`) marks the end. You can verify the whole thing instantly with:
 
-```bash
-strings elf
-```
+<div class="highlighter-rouge">
+  <pre class="highlight"><code class="language-bash">strings elf</code></pre>
+</div>
 
 The full format string is:
 
-{% raw %}
-
 <div class="highlighter-rouge">
-  <pre class="highlight"><code>#include &lt;stdio.h&gt;%c#include &lt;stdlib.h&gt;%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c</code></pre>
+  <pre class="highlight"><code class="language-c">#include &lt;stdio.h&gt;%c#include &lt;stdlib.h&gt;%c%cint main(void) {%c%cconst char* fixed = %c%s%c;%c%cprintf(fixed, 10, 10, 10, 10, 9, 34, fixed, 34, 10, 9, 10, 9, 10, 10);%c%creturn EXIT_SUCCESS;%c}%c</code></pre>
 </div>
-
-{% endraw %}
 
 Every `%c` gets substituted with a character value from the argument list. With `'\n'` (10) and `'\t'` (9) in the right slots, the output is properly indented C source. The `%s` in the middle gets the pointer to `fixed` itself - argument 8 - so the string prints *its own contents* as the value of the `fixed` variable. That is the quine mechanism.
 
@@ -273,10 +269,8 @@ Every `%c` gets substituted with a character value from the argument list. With 
 
 Putting it all together:
 
-{% raw %}
-
 <div class="highlighter-rouge">
-  <pre class="highlight"><code>#include &lt;stdio.h&gt;
+  <pre class="highlight"><code class="language-c">#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 
 int main(void) {
@@ -289,8 +283,6 @@ int main(void) {
 
 }</code></pre>
 </div>
-
-{% endraw %}
 
 Run it, and it prints itself. That is the whole program.
 
