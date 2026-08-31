@@ -62,6 +62,12 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
 a:hover, a:focus-visible { border-bottom-color: var(--accent); }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -263,6 +269,18 @@ h2.section-label {
   background: var(--ink-2);
   border-left: 3px solid var(--accent);
   border-radius: 0 4px 4px 0;
+}
+
+.description img {
+  width: 100vw;
+  max-width: 100vw;
+  height: auto;
+  display: block;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 /* panels: see-also / kv now sit on their own elevation instead of bare text */
