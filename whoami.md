@@ -23,30 +23,5 @@ description: >-
 
 <section>
   <h2 class="section-label">Skills &amp; Languages</h2>
-  <div class="split-container" id="skills-split">
-    <div class="card-grid" id="skills-grid">
-      {% for item in site.data.skills %}
-      <button class="card" data-key="{{ item[0] }}" aria-pressed="false"><i class="{{ item[1].icon }}"></i><span class="card-name">{{ item[1].name }}</span></button>
-      {% endfor %}
-    </div>
-    <div class="detail-pane" id="skills-detail" hidden>
-      <button class="detail-close" aria-label="Close detail">&times;</button>
-      <div class="detail-content"></div>
-    </div>
-  </div>
+  {% include entries.html items=site.data.skills %}
 </section>
-
-<script>
-  var skillsData = {
-    {% for item in site.data.skills %}
-    {{ item[0] | jsonify }}: {
-      title: {{ item[1].title | jsonify }},
-      iconClass: {{ item[1].icon | jsonify }},
-      body: {{ item[1].body | jsonify }}
-    }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  };
-  document.addEventListener('DOMContentLoaded', function () {
-    initSplitGrid('skills-split', 'skills-grid', 'skills-detail', skillsData);
-  });
-</script>

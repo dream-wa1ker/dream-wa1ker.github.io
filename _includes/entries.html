@@ -1,0 +1,17 @@
+{% comment %}
+  Expandable rows for projects and skills. Uses native <details>, so it needs no JS.
+  Usage: {% include entries.html items=site.data.projects %}
+  Data fields: name, title (optional), summary, status (optional), body (HTML), links (optional list of label/url)
+{% endcomment %}
+<div class="entries">
+{% for item in include.items %}
+{% assign e = item[1] %}
+<details class="entry" id="{{ item[0] }}">
+<summary><span class="entry-name">{{ e.title | default: e.name }}</span><span class="entry-summary">{{ e.summary }}</span>{% if e.status %}<span class="entry-status" data-status="{{ e.status | slugify }}">{{ e.status }}</span>{% endif %}</summary>
+<div class="entry-body">
+{{ e.body }}
+{% if e.links %}<ul class="entry-links">{% for l in e.links %}<li><a href="{{ l.url }}">{{ l.label }}</a></li>{% endfor %}</ul>{% endif %}
+</div>
+</details>
+{% endfor %}
+</div>

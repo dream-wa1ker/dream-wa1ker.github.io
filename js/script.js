@@ -63,48 +63,16 @@
   });
 })();
 
-// reusable split-pane card grid (skills / languages / projects)
-function initSplitGrid(containerId, gridId, detailId, data) {
-  const container = document.getElementById(containerId);
-  const grid = document.getElementById(gridId);
-  const detail = document.getElementById(detailId);
-  if (!container || !grid || !detail) return;
-  const detailContent = detail.querySelector('.detail-content');
-  const closeBtn = detail.querySelector('.detail-close');
-
-  function openDetail(key) {
-    const item = data[key];
-    if (!item) return;
-    detailContent.innerHTML =
-      '<div class="detail-title"><i class="' + item.iconClass + '"></i> ' + item.title + '</div>' +
-      '<div class="detail-body">' + item.body + '</div>';
-    detail.hidden = false;
-    container.classList.add('is-split');
-    grid.querySelectorAll('.card').forEach(function (c) {
-      c.classList.toggle('is-active', c.dataset.key === key);
-      c.setAttribute('aria-pressed', c.dataset.key === key ? 'true' : 'false');
-    });
+// open the project/skill entry named in the URL hash, e.g. /projects/#pomoc
+(function () {
+  function openFromHash() {
+    if (!location.hash) return;
+    var el = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (el && el.tagName === 'DETAILS') { el.open = true; el.scrollIntoView(); }
   }
-  function closeDetail() {
-    detail.hidden = true;
-    container.classList.remove('is-split');
-    grid.querySelectorAll('.card').forEach(function (c) {
-      c.classList.remove('is-active');
-      c.setAttribute('aria-pressed', 'false');
-    });
-  }
-  grid.addEventListener('click', function (e) {
-    const card = e.target.closest('.card');
-    if (!card) return;
-    const key = card.dataset.key;
-    if (card.classList.contains('is-active')) closeDetail();
-    else openDetail(key);
-  });
-  closeBtn.addEventListener('click', closeDetail);
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !detail.hidden) closeDetail();
-  });
-}
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
+})();
 
 // wrap Rouge's generated code blocks with a header (language label + copy button),
 // mirroring the old hand-authored .code-block markup
