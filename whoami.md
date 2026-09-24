@@ -1,8 +1,8 @@
 ---
 layout: page
 nav_id: whoami
-og_slug: whoami
-title: whoami(1)
+og_slug: About
+title: Whoami
 prompt: whoami
 bar_label: WHOAMI(1)
 page_title: NAME

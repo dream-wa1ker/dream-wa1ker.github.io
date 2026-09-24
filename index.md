@@ -1,8 +1,8 @@
 ---
 layout: page
 nav_id: home
-og_slug: index
-title: dream-wa1ker(1)
+og_slug: Home
+title: Dream Walker
 prompt: man dream-wa1ker
 bar_label: DREAM-WA1KER(1)
 footer_links: true

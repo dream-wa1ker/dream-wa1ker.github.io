@@ -1,8 +1,8 @@
 ---
 layout: page
 nav_id: contact
-og_slug: contact
-title: contact(1)
+og_slug: Contact
+title: Contact
 prompt: man dream-wa1ker-contact
 bar_label: CONTACT(1)
 footer_links: true

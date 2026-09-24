@@ -1,8 +1,8 @@
 ---
 layout: page
 nav_id: projects
-og_slug: projects
-title: projects(1)
+og_slug: Projects
+title: Projects
 prompt: man dream-wa1ker-projects
 bar_label: PROJECTS(1)
 page_title: NAME
