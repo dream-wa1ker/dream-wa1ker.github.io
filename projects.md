@@ -6,9 +6,9 @@ title: Projects
 prompt: man dream-wa1ker-projects
 bar_label: PROJECTS(1)
 page_title: NAME
-tagline: "projects - what I'm actually building"
+tagline: "Projects - what I'm actually building"
 description: >-
-  Directory - Projects of wa1kerverse. Explore the projects that I create
+  Directory - Projects by me. Explore the projects that I create
   locally and provide explanations for whatever it has become.
 ---
 <section>

@@ -6,11 +6,23 @@ title: Whoami
 prompt: whoami
 bar_label: WHOAMI(1)
 page_title: NAME
-tagline: "whoami - who I actually am which I need not say"
+tagline: "Who am I? - Get to know about me..."
 description: >-
-  Welcome to the whoami man pages of wa1kerverse. Get to know who I am
-  and about what I do.
+  Welcome to the whoami page. Get to know who I am
+  and what I do.
 ---
+
+<section markdown="1">
+## Synopsis
+{: .section-label }
+<div class="description" markdown="1">
+Who am I? Ah, that is a pretty difficult question to answer. I am who I am and you are who you are. The world cannot change that, no matter what, unless I decide to change who I am, or you decide to change who you are. Lol, but identity attacks can, make a cow named Jershy, a citizen of United States of America, who has a name - John Carter? Yes they can. 
+
+I am Dream Walker. As you probably would have read in the home page. I am a Year 1 Cyber Security Student - from Shiv Nadar University. Curiousness, Consciousness, and Capabilities. I love programming, like to learn new informations, and more than anything, I don't want to defend, but break into systems, whatever it is. Human beings somehow think that chaos and order are opposite. But neither exists alone.
+</div>
+</section>
+
+
 <section>
   <h2 class="section-label">Output</h2>
   <div class="kv">

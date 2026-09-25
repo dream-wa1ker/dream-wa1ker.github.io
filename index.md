@@ -7,11 +7,9 @@ prompt: man dream-wa1ker
 bar_label: DREAM-WA1KER(1)
 footer_links: true
 page_title: NAME
-tagline: "dream-wa1ker - mannual for mannual introduction; wa1kerverse"
+tagline: "Personal Website - A place where connections are made..."
 description: >-
-  This is wa1kerverse, my personal portfolio and projects hub. I am
-  dream-wa1ker, and I am a student who learns. Welcome to a mysterious
-  part of the web, this site should probably engage you.
+  This is my personal website, a portfolio, and a place where I showcase my projects. Hosted via Github Pages to a custom domain.
 ---
 <div class="profile-block">
   <img src="{{ '/assets/profile.png' | relative_url }}" alt="Profile image" class="profile-img">
@@ -22,7 +20,7 @@ description: >-
 ## Synopsis
 {: .section-label }
 <div class="description" markdown="1">
-Welcome to my website. This is mostly powered by [Github Pages](https://github.com/). Seems like you have stumbled across the most mysterious site in the internet. This is `wa1kerverse`, my personal hub of internet connections and projects.
+Welcome to my website. This is my personal website, a portfolio, and a place where I showcase my projects. This site is mostly powered by Github Pages to a custom domain which I own. 
 </div>
 </section>
 
@@ -30,15 +28,10 @@ Welcome to my website. This is mostly powered by [Github Pages](https://github.c
 ## Description
 {: .section-label }
 <div class="description" markdown="1">
-I mostly write C and x86_64 assembly, and then document what I learn as thoroughly as I can.
-For that I use inline comments as well as seperate markdown files for giving explanations for the code in my own words.
-Most of that lives in a personal reference vault in obsidian which I call as **vault - 0000**,
-documenting the function signatures, footguns, etc.
 
-Right now I'm mostly working on small C and assembly projects, and writing
-reference docs for the standard library and POSIX calls those projects lean on.
-I go deeper than the man pages usually go, because that's the part that actually
-helps when something breaks at 22:00 - and more importanly in the field of cyber security;
+Hey there! I am Dream Walker, and thank you for visiting my website, which is a very small part of this big Internet, around some corner that has not been explored yet. I am a Cyber Security Student. This website was built - so that I can explore, find opportunities, and make changes to the Internet. 
+
+To know more about me, and the several cool things I build, do, watch or something, you can relay yourself to a different path of the same domain, via the below given links.
 </div>
 </section>
 

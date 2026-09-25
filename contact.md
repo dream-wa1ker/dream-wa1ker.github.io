@@ -7,7 +7,7 @@ prompt: man dream-wa1ker-contact
 bar_label: CONTACT(1)
 footer_links: true
 page_title: NAME
-tagline: "contact - reach me without going through a democratic function"
+tagline: "Contact - Reach me without going through a democratic function"
 description: >-
   For further communication details and informations, or if you are
   willing to connect with me, you can use either of the protocols to
