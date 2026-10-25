@@ -67,7 +67,9 @@
 (function () {
   function openFromHash() {
     if (!location.hash) return;
-    var el = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var id;
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { return; }  // bad %xx in the hash
+    var el = document.getElementById(id);
     if (el && el.tagName === 'DETAILS') { el.open = true; el.scrollIntoView(); }
   }
   openFromHash();
@@ -94,6 +96,7 @@
 
     const btn = header.querySelector('.code-copy');
     btn.addEventListener('click', function () {
+      if (!navigator.clipboard) return;
       navigator.clipboard.writeText(code.textContent).then(function () {
         const original = btn.textContent;
         btn.textContent = 'copied';
@@ -103,6 +106,69 @@
           btn.classList.remove('copied');
         }, 1500);
       });
+    });
+  });
+})();
+
+// click an entry image to see it full size. the <dialog> is made once, on first use,
+// and esc / the close button / a click outside the picture all close it
+(function () {
+  var zoom_buttons = document.querySelectorAll('.entry-zoom');
+  if (!zoom_buttons.length || typeof HTMLDialogElement === 'undefined') return;
+
+  var box = null;
+  var big = null;
+
+  function build() {
+    box = document.createElement('dialog');
+    box.className = 'lightbox';
+    big = document.createElement('img');
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'lightbox-close';
+    close.textContent = 'close';
+    close.addEventListener('click', function () { box.close(); });
+    box.addEventListener('click', function (e) {
+      if (e.target === box) box.close();   // the backdrop counts as the dialog itself
+    });
+    box.appendChild(big);
+    box.appendChild(close);
+    document.body.appendChild(box);
+  }
+
+  zoom_buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (!box) build();
+      big.src = btn.dataset.full;
+      big.alt = btn.dataset.alt || '';
+      box.showModal();
+    });
+  });
+})();
+
+// accordion: opening an entry closes the others in the same list, then the page
+// glides to the new entry once the heights have finished animating.
+// "toggle" also fires for the url-hash opener above, so that path is covered too
+(function () {
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var settle_ms = calm ? 0 : 340;   // a bit longer than the css height transition
+  var timer = null;
+
+  function glide_to(entry) {
+    var top = entry.getBoundingClientRect().top;
+    // only move if the title row is off screen or low down, otherwise stay put
+    if (top >= 0 && top < window.innerHeight * 0.5) return;
+    entry.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  document.querySelectorAll('.entries .entry').forEach(function (entry) {
+    entry.addEventListener('toggle', function () {
+      if (!entry.open) return;
+      entry.parentElement.querySelectorAll('.entry[open]').forEach(function (other) {
+        if (other !== entry) other.open = false;
+      });
+      clearTimeout(timer);
+      timer = setTimeout(function () { glide_to(entry); }, settle_ms);
     });
   });
 })();

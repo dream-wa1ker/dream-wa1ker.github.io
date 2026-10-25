@@ -1,15 +1,36 @@
 {% comment %}
-  Expandable rows for projects and skills. Uses native <details>, so it needs no JS.
-  Usage: {% include entries.html items=site.data.projects %}
-  Data fields: name, title (optional), summary, status (optional), body (HTML), links (optional list of label/url)
+  expandable rows for projects and skills. native <details>, so no js needed to open them.
+  usage: {% include entries.html items=site.data.projects %}
+  data fields:
+    name, title (optional), summary, status (optional), body (html)
+    hero   (optional) one full width image shown at the top of the opened entry: src / alt / caption (+ width, height)
+    icon   (optional) a css class string, e.g. "devicon-archlinux-plain" or "fa-solid fa-terminal"
+    images (optional) list of src / alt / caption (+ width and height if you know them)
+    links  (optional) list of label / url
 {% endcomment %}
 <div class="entries">
 {% for item in include.items %}
 {% assign e = item[1] %}
 <details class="entry" id="{{ item[0] }}">
-<summary><span class="entry-name">{{ e.title | default: e.name }}</span><span class="entry-summary">{{ e.summary }}</span>{% if e.status %}<span class="entry-status" data-status="{{ e.status | slugify }}">{{ e.status }}</span>{% endif %}</summary>
+<summary><span class="entry-name">{% if e.icon %}<i class="entry-icon {{ e.icon }}" aria-hidden="true"></i>{% endif %}{{ e.title | default: e.name }}</span><span class="entry-summary">{{ e.summary }}</span>{% if e.status %}<span class="entry-status" data-status="{{ e.status | slugify }}">{{ e.status }}</span>{% endif %}</summary>
+{% if e.hero %}
+<figure class="entry-hero">
+<button type="button" class="entry-zoom" data-full="{{ e.hero.src | relative_url }}" data-alt="{{ e.hero.alt | escape }}" aria-label="enlarge image: {{ e.hero.alt | escape }}"><img src="{{ e.hero.src | relative_url }}" alt="{{ e.hero.alt | escape }}" loading="lazy" decoding="async"{% if e.hero.width %} width="{{ e.hero.width }}"{% endif %}{% if e.hero.height %} height="{{ e.hero.height }}"{% endif %}></button>
+{% if e.hero.caption %}<figcaption>{{ e.hero.caption }}</figcaption>{% endif %}
+</figure>
+{% endif %}
 <div class="entry-body">
 {{ e.body }}
+{% if e.images %}
+<div class="entry-gallery">
+{% for img in e.images %}
+<figure class="entry-figure">
+<button type="button" class="entry-zoom" data-full="{{ img.src | relative_url }}" data-alt="{{ img.alt | escape }}" aria-label="enlarge image: {{ img.alt | escape }}"><img src="{{ img.src | relative_url }}" alt="{{ img.alt | escape }}" loading="lazy" decoding="async"{% if img.width %} width="{{ img.width }}"{% endif %}{% if img.height %} height="{{ img.height }}"{% endif %}></button>
+{% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
+</figure>
+{% endfor %}
+</div>
+{% endif %}
 {% if e.links %}<ul class="entry-links">{% for l in e.links %}<li><a href="{{ l.url }}">{{ l.label }}</a></li>{% endfor %}</ul>{% endif %}
 </div>
 </details>

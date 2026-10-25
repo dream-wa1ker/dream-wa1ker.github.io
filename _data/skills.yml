@@ -1,6 +1,6 @@
 c:
   name: C
-  icon: fa-solid fa-code
+  icon: devicon-c-plain
   title: C
   summary: "Why I picked it, and where it leads."
   body: |
@@ -17,7 +17,7 @@ asm:
 
 arch:
   name: Arch Linux
-  icon: fa-brands fa-linux
+  icon: devicon-archlinux-plain
   title: Arch Linux
   summary: "Daily driver for almost two years."
   body: |
@@ -25,7 +25,7 @@ arch:
 
 git:
   name: Git & GitHub
-  icon: fa-brands fa-github
+  icon: devicon-git-plain
   title: Git & GitHub
   summary: "Almost four years, for code and the docs vault."
   body: |
