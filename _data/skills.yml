@@ -2,26 +2,55 @@ c:
   name: C
   icon: devicon-c-plain
   title: C
-  summary: "Why I picked it, and where it leads."
+  summary: "Learning C by writing small programs, making mistakes, and figuring out why they happen."
+  links:
+    - label: "github"
+      url: "https://github.com/dream-wa1ker/init87"
   body: |
-    <p> My journey into C programming is very wierd; I was just language hopping just like distrohopping - I wanted to base my future on a safe irreplaceable programming language. I found <b>go</b> first, soon after learning the basics of python; Then I found about <b>rust</b> - I initially seemed very promising for me as rust developers are far less than C programmers. But actually turned out that the AI cannot perform low level stuffs like humans can (atleast not sooner) because low level is everything that cyberattacks are based on - like spyware, APTs, Nation States, etc.</p>
-    <p>I was always fond of those uncrackable hacks, the power of surveillence, the potential of cyberweapons - STUXNET; The NSA, The Putin's Bear - Simply these organisations and tools motivated me into the field of cypersec - I either become a part of Nation State, or a part of group that is against the Nation State. And that's what project - <a href="https://github.com/dream-wa1ker/init87">init87</a> is all about.</p>
+    <p>I got into C after spending some time jumping between programming languages. I started with Python, looked into Go, and then Rust. Eventually, I wanted to get closer to how programs actually work, rather than relying on a language or runtime to handle everything for me. C seemed like a good place to start.</p>
+    <p><a href="https://github.com/dream-wa1ker/init87">init87</a> is my first C project. It's mostly small programs, experiments, and things I write to make sense of the language. I'm still learning, so a lot of it comes down to trying something, getting it wrong, and understanding what went wrong.</p>
+    <p>I'm particularly interested in the relationship between C, memory, and the operating system. That interest is also why I'm learning x86-64 assembly and Linux syscalls alongside C. I want to understand what's happening beneath the code, one layer at a time. Hoping that one day, I will contribute to the Linux Kernel...</p>
+  hero:
+    src: /assets/img/init87.png
+    alt: "C source code from the init87 programming experiments"
+    caption: "Learning C"
+
 
 asm:
   name: x86-64 Assembly
   icon: fa-solid fa-microchip
   title: x86-64 Assembly
-  summary: "Registers and calling conventions, via init88."
+  summary: "Learning assembly through pwn.college, from registers to reading compiler output."
+  links:
+    - label: "pwn.college"
+      url: "https://pwn.college/computing-101/"
+    - label: "github"
+      url: "https://github.com/dream-wa1ker/init88"
   body: |
-    <p>Some random, but experienced redditor in the r/CProgramming suggested that I learn x86-64 assembly alongside with C and Linux Syscalls so that I would be able to understand what actually is happening underneath. The project <a href="https://github.com/dream-wa1ker/init88">init88</a> is basically me forcing myself to understand registers and calling conventions instead of letting C hide them. Afterall, STUXNET exploited a PLC controller; that happens to be embedded systems and programming.</p>
+    <p>I got into x86-64 assembly through <a href="https://pwn.college/computing-101/">pwn.college's Computing 101</a> course. I wanted to understand what actually happens beneath C: how instructions manipulate registers, how memory is accessed, and how programs interact with the machine.</p>
+    <p>I'm not an assembly expert yet, but I can read <code>objdump</code> output to a reasonable extent and follow what a compiled program is doing. I'm still learning the details, particularly the relationship between instructions, calling conventions, and the underlying machine code.</p>
+    <p>My project <a href="https://github.com/dream-wa1ker/init88">init88</a> is where I document and practise that learning. The goal is to get comfortable moving between C code, assembly instructions, and raw machine bytes, building a foundation for debugging and reverse engineering. All thanks to random redditor for suggesting me to learn x86-64.</p>
+  hero:
+    src: /assets/img/init88.png
+    alt: "x86-64 assembly instructions and register operations viewed in a disassembler"
+    caption: "Under the Hood"
 
 arch:
   name: Arch Linux
   icon: devicon-archlinux-plain
-  title: Arch Linux
-  summary: "Daily driver for almost two years."
+  title: Arch Linux & Hyprland
+  summary: "Two years on Arch, building my own Wayland desktop with Hyprland."
+  links:
+    - label: "github"
+      url: "https://github.com/dream-wa1ker/hyprdots-0"
   body: |
-    <p>Have been daily driving Arch Linux for almost 2 years. Hell no that I could not find any Arch Linux logo in cdnjs fonts. I like knowing what's actually installed on my system and why, instead of a distro deciding for me. One day I had a close call - installing KDE bloat and CachyOS with its generous 'extra' services; But EFI was not big enough :)</p>
+    <p>I've been daily driving Arch Linux with Hyprland for almost two years. I like knowing what's installed on my system, why it's there, and how the pieces fit together. I'd rather build my own desktop than have a desktop environment make those decisions for me.</p>
+    <p>My dotfiles project, <a href="https://github.com/dream-wa1ker/hyprdots-0">hyprdots-0</a>, is where I put that philosophy into practice. It brings together Hyprland, Noctalia, and the rest of my desktop configuration, managed with chezmoi. The goal isn't just to make the desktop look good, but to understand and maintain the system behind it. Lua:)</p>
+    <p>Two years of daily driving Arch has taught me to value control over convenience, minimalism over unnecessary services, and understanding over blindly copying configurations. And, as @david_bombal said, with great power comes great responsibility...</p>
+  hero:
+    src: /assets/img/hyprdots-0.png
+    alt: "The hyprdots-0 Arch Linux desktop running Hyprland with a Nord-inspired theme"
+    caption: "My Arch Linux Desktop"
 
 git:
   name: Git & GitHub

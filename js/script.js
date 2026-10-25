@@ -146,32 +146,91 @@
   });
 })();
 
-// accordion: opening an entry closes the others in the same list, then the page
-// glides to the new entry once the heights have finished animating.
-// "toggle" also fires for the url-hash opener above, so that path is covered too
-(function () {
-  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var settle_ms = calm ? 0 : 340;   // a bit longer than the css height transition
-  var timer = null;
 
-  function glide_to(entry) {
-    var top = entry.getBoundingClientRect().top;
-    // only move if the title row is off screen or low down, otherwise stay put
-    if (top >= 0 && top < window.innerHeight * 0.5) return;
-    entry.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+(function () {
+  const entries = document.querySelectorAll('.entries .entry');
+  const reducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  );
+
+  let scrollTimer = null;
+
+  function focusHeading(entry) {
+    const heading = entry.querySelector(':scope > summary');
+    if (!heading) return;
+
+    const rect = heading.getBoundingClientRect();
+    const margin = 45;
+
+    // Do not scroll if the entire heading is already visible.
+    if (
+      rect.top >= margin &&
+      rect.bottom <= window.innerHeight - margin
+    ) {
+      return;
+    }
+
+    // Position the heading fully inside the viewport.
+    const top = window.scrollY + rect.top - margin;
+
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: reducedMotion.matches ? 'auto' : 'smooth'
+    });
   }
 
-  document.querySelectorAll('.entries .entry').forEach(function (entry) {
+  function openEntry(entry) {
+    const list = entry.closest('.entries');
+    if (!list) return;
+
+    // Close any other open entry in this list.
+    list.querySelectorAll('.entry[open]').forEach(function (other) {
+      if (other !== entry) {
+        other.open = false;
+      }
+    });
+
+    clearTimeout(scrollTimer);
+
+    if (reducedMotion.matches) {
+      focusHeading(entry);
+      return;
+    }
+
+    let finished = false;
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+
+      entry.removeEventListener('transitionend', onTransitionEnd);
+      clearTimeout(scrollTimer);
+
+      focusHeading(entry);
+    }
+
+    function onTransitionEnd(event) {
+      if (
+        event.propertyName === 'height' &&
+        (!event.pseudoElement ||
+          event.pseudoElement === '::details-content')
+      ) {
+        finish();
+      }
+    }
+
+    entry.addEventListener('transitionend', onTransitionEnd);
+
+    // Fallback in case the transition event does not fire.
+    scrollTimer = setTimeout(finish, 380);
+  }
+
+  entries.forEach(function (entry) {
     entry.addEventListener('toggle', function () {
-      if (!entry.open) return;
-      entry.parentElement.querySelectorAll('.entry[open]').forEach(function (other) {
-        if (other !== entry) other.open = false;
-      });
-      clearTimeout(timer);
-      timer = setTimeout(function () { glide_to(entry); }, settle_ms);
+      if (entry.open) {
+        openEntry(entry);
+      }
     });
   });
 })();
-
-
 
