@@ -110,8 +110,9 @@
   });
 })();
 
-// click an entry image to see it full size. the <dialog> is made once, on first use,
-// and esc / the close button / a click outside the picture all close it
+
+ // Click an entry image to see it full size. The <dialog> is made once, on first use,
+// and Esc / the close button / a click outside the picture all close it.
 (function () {
   var zoom_buttons = document.querySelectorAll('.entry-zoom');
   if (!zoom_buttons.length || typeof HTMLDialogElement === 'undefined') return;
@@ -122,15 +123,23 @@
   function build() {
     box = document.createElement('dialog');
     box.className = 'lightbox';
+
     big = document.createElement('img');
+
     var close = document.createElement('button');
     close.type = 'button';
     close.className = 'lightbox-close';
-    close.textContent = 'close';
-    close.addEventListener('click', function () { box.close(); });
-    box.addEventListener('click', function (e) {
-      if (e.target === box) box.close();   // the backdrop counts as the dialog itself
+    close.textContent = '×';
+    close.setAttribute('aria-label', 'Close image');
+
+    close.addEventListener('click', function () {
+      box.close();
     });
+
+    box.addEventListener('click', function (e) {
+      if (e.target === box) box.close();
+    });
+
     box.appendChild(big);
     box.appendChild(close);
     document.body.appendChild(box);
@@ -139,8 +148,10 @@
   zoom_buttons.forEach(function (btn) {
     btn.addEventListener('click', function () {
       if (!box) build();
+
       big.src = btn.dataset.full;
       big.alt = btn.dataset.alt || '';
+
       box.showModal();
     });
   });
