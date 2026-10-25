@@ -33,6 +33,7 @@ defaults:
 exclude:
   - Gemfile
   - Gemfile.lock
+  - vendor
   - README.md
   - LICENSE
 
